@@ -31,7 +31,7 @@ export const projects: readonly Project[] = [
     role: "Solo engineer — architecture, build, data pipelines, operations",
     kind: "Personal-Finance Platform · FinTech",
     period: "Dec 2025 — Present",
-    metaTitle: "MoneyDock — a solo-built financial platform, ~4,800 pages behind 272 tests",
+    metaTitle: "MoneyDock — a solo-built financial platform, ~9,250 pages behind 272 tests",
     cardBlurb:
       "A no-signup financial platform for Indian retail investors: 27 hand-built calculators, ~1,800 stock pages and ~3,500 mutual-fund pages computed from live NSE and AMFI feeds, and 272 automated tests wired into the build command so a failing test blocks the deploy.",
     rationale:
@@ -39,14 +39,14 @@ export const projects: readonly Project[] = [
     metrics: [
       { value: "168K", label: "Google search impressions · 27 Nov 2025 – 10 Oct 2026" },
       { value: "1,270", label: "organic clicks · same window" },
-      { value: "~4,800", label: "pages indexed · ~5,100 in the sitemap" },
+      { value: "~9,250", label: "pages indexed by Google · Search Console, 4 Oct 2026" },
       { value: "272", label: "automated tests · a failure blocks the deploy" },
       { value: "27", label: "financial calculators, hand-derived" },
       { value: "5", label: "live external data feeds" },
     ],
     overview: [
       "MoneyDock is a free, no-signup personal-finance platform for Indian retail investors, live at moneydock.in. It does four things: runs 27 financial calculations that recompute live as you drag a slider; serves a page per NSE-listed stock and per mutual fund with computed returns, annualised volatility and maximum drawdown; compares any two of them head-to-head with a ₹10,000-growth overlay; and reads the market — indices, forex, commodities, crypto, and gold and silver rates with the India duty and GST maths made explicit.",
-      "I built and operate all of it: the Next.js application, the MongoDB schema, the five ingestion pipelines, the 272-test suite, the SEO architecture that took it to roughly 4,800 indexed pages, and the decisions about what not to build. There is no team, and there is no separate ops function.",
+      "I built and operate all of it: the Next.js application, the MongoDB schema, the five ingestion pipelines, the 272-test suite, the SEO architecture that took it to roughly 9,250 indexed pages, and the decisions about what not to build. There is no team, and there is no separate ops function.",
       "The interesting engineering here is not the calculators — it is that this is a money-adjacent product at programmatic scale. Both halves of that phrase constrain the design hard. Money-adjacent means a wrong number is worse than no number. Programmatic scale means thousands of near-identical pages, which is precisely the pattern Google’s March 2026 core update was built to demote. Most of what follows is the consequence of taking both of those seriously at the same time.",
     ],
     problem: [
@@ -248,7 +248,7 @@ export const projects: readonly Project[] = [
         "The income tax and Atal Pension calculators use rounded slab offsets and an approximation formula rather than the exact statutory tables. Both are marked as approximations in the source; on a finance site both should be exact.",
         "One dependency (sharp) is imported by the blog image job but missing from package.json — it resolves only through a transitive copy, which is a build waiting to break.",
         "Only one of the nine cron jobs currently pings IndexNow on publish. Wiring the rest would cut the lag between a page updating and search engines seeing it.",
-        "The sitemap is a single document. It is fine at ~5,100 URLs and needs sharding before it reaches the 50,000-URL limit; the rationale for deferring it is written down rather than assumed.",
+        "The sitemap is a single document. It is fine at today’s size and needs sharding before it reaches the 50,000-URL limit; the rationale for deferring it is written down rather than assumed.",
         "Coverage reporting is not configured, so I know the suite is meaningful by reading it rather than by measuring it.",
       ],
     },

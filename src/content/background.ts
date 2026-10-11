@@ -131,7 +131,7 @@ export const achievements: readonly Achievement[] = [
     context: "moneydock.in, from a domain with no search history before late November 2025",
   },
   {
-    achievement: "4,800+ pages indexed by Google",
+    achievement: "9,200+ pages indexed by Google",
     context: "Programmatic page sets built to survive a scaled-content review",
   },
   {

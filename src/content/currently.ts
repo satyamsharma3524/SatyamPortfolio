@@ -29,7 +29,7 @@ export const currently: readonly CurrentlyEntry[] = [
     period: "Dec 2025 — Present",
     role: "Solo engineer — built and operated",
     summary:
-      "A personal-finance platform for the Indian market. 27 calculators, ~4,800 indexed pages, five external data feeds, 272 tests gating every deploy. Live at moneydock.in.",
+      "A personal-finance platform for the Indian market. 27 calculators, ~9,250 indexed pages, five external data feeds, 272 tests gating every deploy. Live at moneydock.in.",
     live: true,
     caseStudy: "moneydock",
   },

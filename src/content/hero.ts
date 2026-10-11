@@ -15,7 +15,7 @@ export const hero = {
   headlineSrPrefix: "Satyam Sharma, backend and platform engineer —",
   subheadline:
     "Backend engineer working the seam between development and operations — Python and Django services, and the Linux, Docker and observability layer they actually run on.",
-  lede: "Software Engineer at HT Media, previously India IVF Fertility and InstaAstro. Outside work I built MoneyDock, a personal-finance platform for the Indian market: 27 calculators, ~4,800 indexed pages, five live data feeds, and 272 automated tests wired into the build command so a failing test blocks the deploy. And Animatrixx — plus the nine-container stack behind it: Django under uWSGI behind nginx, Celery on RabbitMQ, Redis, Elasticsearch, and a Prometheus/Grafana/Loki layer I self-host rather than rent.",
+  lede: "Software Engineer at HT Media, previously India IVF Fertility and InstaAstro. Outside work I built MoneyDock, a personal-finance platform for the Indian market: 27 calculators, ~9,250 indexed pages, five live data feeds, and 272 automated tests wired into the build command so a failing test blocks the deploy. And Animatrixx — plus the nine-container stack behind it: Django under uWSGI behind nginx, Celery on RabbitMQ, Redis, Elasticsearch, and a Prometheus/Grafana/Loki layer I self-host rather than rent.",
   /** Four cells, mono, no icons. This is the 12-second read. */
   proof: [
     { value: "4 yrs", label: "Python and Django in production" },
