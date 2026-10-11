@@ -132,7 +132,7 @@ export const achievements: readonly Achievement[] = [
   },
   {
     achievement: "9,200+ pages indexed by Google",
-    context: "Programmatic page sets built to survive a scaled-content review",
+    context: "Of 15,977 URLs in the sitemap — programmatic page sets built to survive a scaled-content review",
   },
   {
     achievement: "272 tests gating every production deploy",

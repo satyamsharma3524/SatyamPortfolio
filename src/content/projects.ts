@@ -33,13 +33,13 @@ export const projects: readonly Project[] = [
     period: "Dec 2025 — Present",
     metaTitle: "MoneyDock — a solo-built financial platform, ~9,250 pages behind 272 tests",
     cardBlurb:
-      "A no-signup financial platform for Indian retail investors: 27 hand-built calculators, a page for every NSE stock and mutual fund, and automated fund-vs-fund and stock-vs-stock comparisons across related categories — ~9,250 pages indexed by Google, all computed from live NSE and AMFI feeds, with 272 automated tests wired into the build command so a failing test blocks the deploy.",
+      "A no-signup financial platform for Indian retail investors: 27 hand-built calculators, ~2,600 stock pages, ~3,800 mutual-fund pages and ~9,400 automated fund-vs-fund and stock-vs-stock comparisons across related categories — 15,977 URLs in the sitemap and ~9,250 indexed by Google, all computed from live NSE and AMFI feeds, with 272 automated tests wired into the build command so a failing test blocks the deploy.",
     rationale:
       "A solo build carrying real production load, real money-adjacent correctness requirements, and a test suite that gates its own deploys. The closest thing on this page to a small engineering team’s output.",
     metrics: [
       { value: "168K", label: "Google search impressions · 27 Nov 2025 – 10 Oct 2026" },
       { value: "1,270", label: "organic clicks · same window" },
-      { value: "~9,250", label: "pages indexed by Google · Search Console, 4 Oct 2026" },
+      { value: "~9,250", label: "pages indexed by Google (4 Oct 2026) · 15,977 in the sitemap" },
       { value: "272", label: "automated tests · a failure blocks the deploy" },
       { value: "27", label: "financial calculators, hand-derived" },
       { value: "5", label: "live external data feeds" },
@@ -248,7 +248,7 @@ export const projects: readonly Project[] = [
         "The income tax and Atal Pension calculators use rounded slab offsets and an approximation formula rather than the exact statutory tables. Both are marked as approximations in the source; on a finance site both should be exact.",
         "One dependency (sharp) is imported by the blog image job but missing from package.json — it resolves only through a transitive copy, which is a build waiting to break.",
         "Only one of the nine cron jobs currently pings IndexNow on publish. Wiring the rest would cut the lag between a page updating and search engines seeing it.",
-        "The sitemap is a single document. It is fine at today’s size and needs sharding before it reaches the 50,000-URL limit; the rationale for deferring it is written down rather than assumed.",
+        "The sitemap is a single document. It is fine at ~16,000 URLs and needs sharding before it reaches the 50,000-URL limit; the rationale for deferring it is written down rather than assumed.",
         "Coverage reporting is not configured, so I know the suite is meaningful by reading it rather than by measuring it.",
       ],
     },
