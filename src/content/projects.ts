@@ -33,7 +33,7 @@ export const projects: readonly Project[] = [
     period: "Dec 2025 — Present",
     metaTitle: "MoneyDock — a solo-built financial platform, ~9,250 pages behind 272 tests",
     cardBlurb:
-      "A no-signup financial platform for Indian retail investors: 27 hand-built calculators, ~1,800 stock pages and ~3,500 mutual-fund pages computed from live NSE and AMFI feeds, and 272 automated tests wired into the build command so a failing test blocks the deploy.",
+      "A no-signup financial platform for Indian retail investors: 27 hand-built calculators, a page for every NSE stock and mutual fund, and automated fund-vs-fund and stock-vs-stock comparisons across related categories — ~9,250 pages indexed by Google, all computed from live NSE and AMFI feeds, with 272 automated tests wired into the build command so a failing test blocks the deploy.",
     rationale:
       "A solo build carrying real production load, real money-adjacent correctness requirements, and a test suite that gates its own deploys. The closest thing on this page to a small engineering team’s output.",
     metrics: [
@@ -137,7 +137,7 @@ export const projects: readonly Project[] = [
         },
         {
           feature: "Head-to-head comparison",
-          what: "Any two stocks or funds, with a ₹10,000-growth overlay, a risk table and a data-derived verdict",
+          what: "Any two stocks or funds, with a ₹10,000-growth overlay, a risk table and a data-derived verdict. Pages are generated automatically for pairs in related categories",
           why: "Reversed slugs canonicalise to one sorted URL, so a-vs-b and b-vs-a never compete as duplicates in the index",
         },
         {
