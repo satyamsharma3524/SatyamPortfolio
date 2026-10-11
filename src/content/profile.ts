@@ -14,20 +14,12 @@
                      site, because every other URL is derived from it.
    3. `portrait`   — WIRED, but the file currently at that path is the template
                      author's photograph, not Satyam's. Overwrite the bytes at
-                     public/images/satyam-sharma-portrait.webp. Set this back to
+                     public/images/satyam-sharma-portrait-v2.webp. Set this back to
                      null to fall back to the typographic panel in the meantime.
 
-   ⚠️ `resumeAvailable` is FALSE ON PURPOSE, and this is not the same kind of
-   placeholder as the three above. The file at `resumeHref` has the right filename
-   and the WRONG CONTENTS: its first lines read "SHIVAM SHARMA / Associate Product
-   Manager · AI Products", with that person's phone number, email, LinkedIn and
-   GitHub. Renaming a PDF does not rewrite it.
-
-   A résumé sits behind a button, so unlike a wrong photograph nobody notices it is
-   wrong until a recruiter opens it — which is the worst possible moment. So the
-   button stays hidden until the PDF is genuinely Satyam's. Replace the bytes at
-   public/Satyam-Sharma-Software-Engineer-Resume.pdf, then flip this to true; the
-   hero, the header and the footer all pick it up from here.
+   ✅ `resumeAvailable` is TRUE: public/SatyamSharma_Resume_2025.pdf is now
+   Satyam's own résumé (the Dec 2025 version — re-export it when it is updated with HT Media),
+   and public/images/satyam-sharma-portrait-v2.webp is his own photograph.
    ========================================================================== */
 
 export const profile = {
@@ -39,11 +31,11 @@ export const profile = {
   locationShort: "Noida, India · IST",
   experience: "4 years in production",
   siteUrl: "https://satyam-sharma-portfolio.vercel.app",
-  resumeHref: "/Satyam-Sharma-Software-Engineer-Resume.pdf",
+  resumeHref: "/SatyamSharma_Resume_2025.pdf",
   /* Flip to true once the PDF is in /public. Widened to `boolean` deliberately so the
      conditional branches on both sides stay live code rather than being narrowed away. */
-  resumeAvailable: false as boolean,
-  portrait: "/images/satyam-sharma-portrait.webp" as string | null,
+  resumeAvailable: true as boolean,
+  portrait: "/images/satyam-sharma-portrait-v2.webp" as string | null,
   links: {
     /* Verified: read off the public profile URL on the LinkedIn account itself. */
     linkedin: "https://www.linkedin.com/in/satyam-sharma-726b19202",

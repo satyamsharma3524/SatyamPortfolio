@@ -17,7 +17,7 @@ export const hero = {
   /** Four cells, mono, no icons. This is the 12-second read. */
   proof: [
     { value: "4 yrs", label: "Python and Django in production" },
-    { value: "65.4K", label: "search impressions in 12 months, moneydock.in" },
+    { value: "168K", label: "search impressions since Nov 2025, moneydock.in" },
     { value: "272", label: "tests gating every production deploy" },
     { value: "9", label: "containerised services I run myself" },
   ] satisfies readonly ProofPoint[],

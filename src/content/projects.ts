@@ -37,8 +37,8 @@ export const projects: readonly Project[] = [
     rationale:
       "A solo build carrying real production load, real money-adjacent correctness requirements, and a test suite that gates its own deploys. The closest thing on this page to a small engineering team’s output.",
     metrics: [
-      { value: "65.4K", label: "Google search impressions · 12 months to Aug 2026" },
-      { value: "969", label: "organic clicks · same window" },
+      { value: "168K", label: "Google search impressions · 27 Nov 2025 – 10 Oct 2026" },
+      { value: "1,270", label: "organic clicks · same window" },
       { value: "~4,800", label: "pages indexed · ~5,100 in the sitemap" },
       { value: "272", label: "automated tests · a failure blocks the deploy" },
       { value: "27", label: "financial calculators, hand-derived" },

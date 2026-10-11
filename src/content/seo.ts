@@ -159,7 +159,7 @@ export const ogImage = {
   headline: ["I build the service,", "then I run it."],
   proof: [
     "4 yrs Python in production ·",
-    "65.4K search impressions ·",
+    "168K search impressions ·",
     "272 tests gating every deploy",
   ],
 } as const;

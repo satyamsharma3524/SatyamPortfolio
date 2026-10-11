@@ -140,6 +140,9 @@ export function CaseStudy({ project }: { project: Project }) {
     { id: "technologies", label: "Technologies" },
   ];
 
+  const liveHref = project.links.find(
+    (l) => "href" in l && typeof l.href === "string" && l.href.startsWith("https://"),
+  )?.href;
   const hasWhy = project.features.rows.some((row) => row.why.length > 0);
   const TOC_TOTAL = toc.length;
 
@@ -162,11 +165,25 @@ export function CaseStudy({ project }: { project: Project }) {
               <Status status={project.status} />
             </Reveal>
 
-            <MaskLines
-              as="h1"
-              lines={[project.name]}
-              className="mt-5 text-h1 font-medium text-ink"
-            />
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <MaskLines
+                as="h1"
+                lines={[project.name]}
+                className="text-h1 font-medium text-ink"
+              />
+              {liveHref && (
+                <a
+                  href={liveHref}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Visit ${project.name} (opens ${new URL(liveHref).hostname} in a new tab)`}
+                  className="group inline-flex items-center gap-2 rounded-full border border-line px-4 py-1.5 text-sm font-medium text-ink transition-colors duration-[var(--dur-hover)] hover:border-accent-hover hover:text-accent-hover"
+                >
+                  Visit
+                  <ArrowRight className="shrink-0 -rotate-45 transition-transform duration-[var(--dur-hover)] group-hover:translate-x-0.5" />
+                </a>
+              )}
+            </div>
 
             <Reveal delay={0.06} className="mt-5">
               <p className="font-mono text-mono uppercase leading-[1.7] tracking-[0.12em] text-ink-3">

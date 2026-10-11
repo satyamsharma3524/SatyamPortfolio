@@ -59,6 +59,9 @@ function ProjectVisual({ project }: { project: Project }) {
 
 function ProjectEntry({ project, index }: { project: Project; index: number }) {
   const flip = index % 2 === 1;
+  const liveHref = project.links.find(
+    (l) => "href" in l && typeof l.href === "string" && l.href.startsWith("https://"),
+  )?.href;
 
   return (
     <article className="relative">
@@ -77,15 +80,29 @@ function ProjectEntry({ project, index }: { project: Project; index: number }) {
 
         {/* Copy */}
         <div className={`lg:col-span-6 ${flip ? "lg:order-3 lg:col-start-7" : ""}`}>
-          <h3 className="text-h2 font-medium leading-[1.05] text-ink">
-            <Link
-              href={`/work/${project.slug}`}
-              aria-label={a11y.projectCardLink(project.name)}
-              className="link-draw"
-            >
-              {project.name}
-            </Link>
-          </h3>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <h3 className="text-h2 font-medium leading-[1.05] text-ink">
+              <Link
+                href={`/work/${project.slug}`}
+                aria-label={a11y.projectCardLink(project.name)}
+                className="link-draw"
+              >
+                {project.name}
+              </Link>
+            </h3>
+            {liveHref && (
+              <a
+                href={liveHref}
+                target="_blank"
+                rel="noopener"
+                aria-label={`Visit ${project.name} (opens ${new URL(liveHref).hostname} in a new tab)`}
+                className="group inline-flex items-center gap-2 rounded-full border border-line px-4 py-1.5 text-sm font-medium text-ink transition-colors duration-[var(--dur-hover)] hover:border-accent-hover hover:text-accent-hover"
+              >
+                Visit
+                <ArrowRight className="shrink-0 -rotate-45 transition-transform duration-[var(--dur-hover)] group-hover:translate-x-0.5" />
+              </a>
+            )}
+          </div>
 
           <p className="mt-4 font-mono text-mono uppercase leading-[1.7] tracking-[0.12em] text-ink-3">
             {project.role}

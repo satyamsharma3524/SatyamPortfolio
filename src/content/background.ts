@@ -91,12 +91,12 @@ export const certifications: readonly Certification[] = [
 ];
 
 export const achievementsIntro =
-  "Drawn from work that exists and can be checked. Every figure carries the window it was measured over; the search numbers are Google Search Console for moneydock.in, twelve months to August 2026.";
+  "Drawn from work that exists and can be checked. Every figure carries the window it was measured over; the search numbers are Google Search Console for moneydock.in, 27 November 2025 to 10 October 2026, web search.";
 
 export const achievements: readonly Achievement[] = [
   {
-    achievement: "65,400 search impressions in 12 months",
-    context: "moneydock.in, from a domain that did not exist in December 2025",
+    achievement: "168,000 search impressions since November 2025",
+    context: "moneydock.in, from a domain with no search history before late November 2025",
   },
   {
     achievement: "4,800+ pages indexed by Google",
