@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CaseStudy } from "@/src/components/case-study/CaseStudy";
 import { SiteHeader } from "@/src/components/layout/SiteHeader";
 import { SiteFooter } from "@/src/components/sections/SiteFooter";
+import { profile } from "@/src/content/profile";
 import { projectBySlug, projects } from "@/src/content/projects";
 
 export function generateStaticParams() {
@@ -23,12 +24,12 @@ export async function generateMetadata({
     description: project.cardBlurb,
     alternates: { canonical: `/work/${project.slug}` },
     openGraph: {
-      title: `${project.metaTitle} — Shivam Sharma`,
+      title: `${project.metaTitle} — ${profile.name}`,
       description: project.cardBlurb,
       url: `/work/${project.slug}`,
     },
     twitter: {
-      title: `${project.metaTitle} — Shivam Sharma`,
+      title: `${project.metaTitle} — ${profile.name}`,
       description: project.cardBlurb,
     },
   };

@@ -59,18 +59,28 @@ export function Contact() {
                   {buttons.contactSecondary}
                   <ArrowUpRight className="text-ink-3" />
                 </Button>
-                <Button
-                  href={profile.resumeHref}
-                  variant="quiet"
-                  external
-                  aria-label={a11y.resumeLink}
-                >
-                  {buttons.heroSecondary}
-                </Button>
-                <Button href={profile.links.github} variant="quiet" external>
-                  GitHub
+                {/* Both of these are gated: no dead links, and no links to content
+                    that is not actually mine. See the notes in content/profile.ts. */}
+                {profile.resumeAvailable ? (
+                  <Button
+                    href={profile.resumeHref}
+                    variant="quiet"
+                    external
+                    aria-label={a11y.resumeLink}
+                  >
+                    {buttons.heroSecondary}
+                  </Button>
+                ) : null}
+                <Button href={profile.links.moneydock} variant="quiet" external>
+                  MoneyDock
                   <ArrowUpRight className="text-ink-4" />
                 </Button>
+                {profile.links.github ? (
+                  <Button href={profile.links.github} variant="quiet" external>
+                    GitHub
+                    <ArrowUpRight className="text-ink-4" />
+                  </Button>
+                ) : null}
               </div>
             </Reveal>
           </div>
@@ -86,7 +96,7 @@ export function Contact() {
                       {detail.label}
                     </dt>
                     <dd className="mt-1.5 text-base text-ink">
-                      {detail.label === "Phone" ? (
+                      {"tel" in detail && detail.tel ? (
                         <a
                           href={`tel:${detail.value.replace(/\s/g, "")}`}
                           className="link-draw num"
@@ -94,7 +104,7 @@ export function Contact() {
                           {detail.value}
                         </a>
                       ) : (
-                        <span className={detail.label === "Graduating" ? "num" : ""}>
+                        <span className={"mono" in detail && detail.mono ? "num" : ""}>
                           {detail.value}
                         </span>
                       )}

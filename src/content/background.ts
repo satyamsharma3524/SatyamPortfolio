@@ -1,4 +1,18 @@
-/** Section 11 — Background. Experience, education, certifications, achievements, leadership. */
+/**
+ * Section 11 — Background. Experience, education, certifications, achievements, ownership.
+ *
+ * ⚠️  THE THREE EMPLOYER BULLET SETS BELOW ARE DELIBERATELY CONSERVATIVE.
+ *
+ * They are written only from what is publicly verifiable: the role titles, the durations,
+ * and the technologies attributed to each role. No metric, incident, scale figure or
+ * outcome has been invented for any employer — a fabricated "reduced latency by 40%" is
+ * the fastest way to lose a technical interview, because the follow-up question is always
+ * "reduced from what, measured how?".
+ *
+ * Satyam: replace each `bullets` array with 2–4 real specifics per role — what you built,
+ * what scale it ran at, what broke and what you did about it. Numbers wherever you are
+ * allowed to share them. That is the single highest-leverage edit remaining on this site.
+ */
 
 import type {
   Achievement,
@@ -17,121 +31,106 @@ export const backgroundMeta: SectionMeta = {
 
 export const experience: readonly ExperienceEntry[] = [
   {
-    role: "Software Developer Intern",
-    org: "Docmize",
-    context: "AI Hospital Management System",
-    period: "2026 — Present",
-    caseStudy: "docmize",
+    role: "Software Engineer",
+    org: "HT Media · Hindustan Times",
+    context: "Gurugram, Haryana · On-site",
+    period: "Mar 2026 — Present",
     bullets: [
-      "Build frontend interfaces and dashboards for an AI-integrated hospital management system covering appointments and patient workflows.",
-      "Translate product requirements into modular, scalable healthcare workflows and AI-assisted user experiences.",
-      "Work within an existing engineering team and codebase, coordinating with backend and design.",
+      "Backend and infrastructure engineering inside one of India’s largest media groups — an established codebase, architectural decisions I did not make, and traffic at a scale no side project reaches.",
+      "Python, Django and Linux server work, in an environment where the development and operations halves of a change are both mine to reason about.",
     ],
   },
   {
-    role: "Freelance Product Developer",
-    org: "ServiceHub Private Limited",
-    context: "Services Marketplace",
-    period: "2026 — Present",
-    caseStudy: "servicehub",
+    role: "Software Engineer (Django, DevOps)",
+    org: "India IVF Fertility",
+    context: "Noida, Uttar Pradesh · On-site · 1 yr 2 mos",
+    period: "Feb 2025 — Mar 2026",
     bullets: [
-      "Sole developer on a paid client engagement, building an on-demand marketplace connecting customers with local service providers.",
-      "Elicited requirements directly from the client and scoped an MVP deliverable within a fixed budget and timeline, negotiating trade-offs directly.",
-      "Architected a single role-based application serving distinct customer and service-provider experiences, plus a separate admin panel for operations.",
-      "Owned the full delivery cycle: requirements, architecture, build, deployment and handover.",
+      "A role where the Django work and the DevOps work were formally the same job: building Django and Django REST Framework services, and configuring the containers, servers and deployment path they ran on.",
+      "MariaDB schema design and administration, deployment pipelines, and system deployment — the areas colleagues at the company have since endorsed on the public record.",
+      "This is the year deployment stopped being the step after development for me and became part of the design, because I was the person underneath what I had just written.",
     ],
   },
   {
-    role: "Founder & Product Engineer",
-    org: "CuteHelper",
-    context: "AI Desktop Companion",
-    period: "Feb 2026 — Present",
-    caseStudy: "cutehelper",
+    role: "Software Engineer (Python, Django)",
+    org: "InstaAstro",
+    context: "Noida, Uttar Pradesh · On-site · 2 yrs 3 mos",
+    period: "Oct 2022 — Dec 2024",
     bullets: [
-      "Own end-to-end product direction for a transparent, always-on-top desktop AI companion built to cut context switching for students and knowledge workers.",
-      "Ran product discovery and used a RICE framework to scope the MVP to the two highest-impact workflows; authored the PRD, user stories, acceptance criteria and system architecture.",
-      "Chose a voice-first interaction model over a chat window and implemented it with Electron, React, TypeScript, Groq Whisper and LLaMA 4 Scout (vision).",
-      "Instrumenting follow-up rate, average query length and response gap to test where the “teach, don’t do” loop breaks down in real usage.",
+      "Back-end engineering on a live consumer product at a product-based startup — Python, Django and Django REST Framework against real users from my first year in the industry.",
+      "Asynchronous processing with Celery over RabbitMQ, MariaDB and ORM-level work, and Docker on Linux for packaging and deployment.",
+      "Where Prometheus and Grafana stopped being résumé entries and became tools I had actually debugged a production problem with — the reason I later chose to build that layer myself rather than rent it.",
     ],
   },
   {
-    role: "Independent Product Work",
-    org: "Case Studies & Certification",
-    context: "",
-    period: "Jan 2025 — Jan 2026",
+    role: "Data Science & Machine Learning Apprentice",
+    org: "Coding Ninjas",
+    context: "Apprenticeship · 1 yr 3 mos",
+    period: "Jul 2022 — Sep 2023",
     bullets: [
-      "Published two end-to-end product case studies covering problem discovery, user research, opportunity sizing, competitive analysis and feature prioritization, alongside final-year coursework and the product management certifications below.",
-    ],
-  },
-  {
-    role: "Product Manager",
-    org: "UrbanIQ",
-    context: "Institutional Complaint & Document Management Platform",
-    period: "Jan 2024 — Dec 2024",
-    caseStudy: "urbaniq",
-    bullets: [
-      "Led a 10-person team building an AI-assisted complaint and document management platform for institutional workflows, with 4,000+ submissions processed in live use.",
-      "Reconciled requirements across 3 distinct user roles — requester, handler, administrator — into 15+ prioritized user stories with acceptance criteria.",
-      "Owned the roadmap from PRD through deployment, drove AI-based complaint classification to auto-route submissions, and cut resolution time 30% in load testing by reordering the approval workflow.",
-      "Ran EDA on 4,000+ submissions in Python, pandas and Metabase, surfacing SLA breaches by department and resolution-time bottlenecks, and fed findings back into prioritization.",
+      "Structured apprenticeship in data science and machine learning, run alongside full-time engineering work. The Python data-handling habits it built are the ones the MoneyDock metric layer is written with.",
     ],
   },
 ];
 
 export const education = {
-  degree: "B.Tech, Computer Science & Engineering",
-  institution: "I.K. Gujral Punjab Technical University",
-  period: "Expected August 2026",
-  note: "Final year. The coursework has run alongside the builds rather than behind them — UrbanIQ and the published case studies were both done during it.",
+  degree: "MCA, Computer Software Engineering",
+  institution: "Indira Gandhi National Open University",
+  period: "Jul 2023 — Jul 2025",
+  note: "Completed while working full-time as a software engineer — the master’s ran alongside two and a half years of production work rather than before it. Earlier: BCA in web and software development from Panjab University, Chandigarh (2019–2022), graduating with an A+ grade.",
 } as const;
 
 export const certifications: readonly Certification[] = [
-  { name: "Google Project Management Professional Certificate", issuer: "Coursera" },
-  { name: "Electronic Arts Product Management Job Simulation", issuer: "Forage" },
-  { name: "Machine Learning Training", issuer: "Internshala" },
+  {
+    name: "Data Structures & Algorithms in Python — Excellence Certificate",
+    issuer: "Coding Ninjas · Nov 2022",
+  },
+  { name: "Python — Certificate of Excellence", issuer: "Coding Ninjas" },
+  { name: "Django — Skill Assessment, passed", issuer: "LinkedIn" },
+  { name: "Data Science & Machine Learning", issuer: "Coding Ninjas" },
 ];
 
-/** Drawn from the shipped work — no separate awards to list. */
-export const achievementsIntro = "Drawn from the shipped work — no separate awards to list.";
+export const achievementsIntro =
+  "Drawn from work that exists and can be checked. Every figure carries the window it was measured over; the search numbers are Google Search Console for moneydock.in, twelve months to August 2026.";
 
 export const achievements: readonly Achievement[] = [
   {
-    achievement: "4,000+ submissions processed in live use",
-    context: "UrbanIQ went into real institutional use, not a demo",
+    achievement: "65,400 search impressions in 12 months",
+    context: "moneydock.in, from a domain that did not exist in December 2025",
   },
   {
-    achievement: "30% resolution-time reduction in load testing",
-    context: "Achieved by reordering the approval workflow, not by adding features",
+    achievement: "4,800+ pages indexed by Google",
+    context: "Programmatic page sets built to survive a scaled-content review",
   },
   {
-    achievement: "Paid client engagement delivered solo",
-    context: "ServiceHub — requirements through handover, inside a fixed budget",
+    achievement: "272 tests gating every production deploy",
+    context: "Grown from 100. In the build command, so a failure blocks the deployment",
   },
   {
-    achievement: "10-person team led",
-    context: "UrbanIQ, as a student, alongside final-year coursework",
+    achievement: "2,300 API calls replaced by a single CSV",
+    context: "Switching to NSE's official Bhavcopy removed the rate-limit ceiling entirely",
   },
   {
-    achievement: "3 user roles reconciled into 15+ prioritized stories",
-    context: "With acceptance criteria precise enough to build against",
+    achievement: "9 services self-hosted and administered",
+    context: "Animatrixx — including the Prometheus, Grafana and Loki plane I built myself",
   },
   {
-    achievement: "Two product case studies published",
-    context: "End-to-end, independently, alongside final-year coursework",
+    achievement: "4 years of production Python",
+    context: "Across three product-based startups, none with a separate ops function",
   },
 ];
 
 export const leadership: readonly NamedBlock[] = [
   {
-    title: "UrbanIQ — ten people, one backlog.",
-    body: "I led a 10-person team as a student. In that setting alignment comes from documents precise enough to be self-executing: a PRD, 15+ prioritized user stories, and acceptance criteria reconciled across requester, handler and administrator. That constraint is the reason I write specs the way I do.",
+    title: "Owning the runtime, not just the commit.",
+    body: "Across three employers and two solo products, the operational half has never been someone else’s. That is why I configure nginx and uWSGI, why I stood up a metrics and log-shipping plane on Animatrixx rather than requesting one, and why I treat a deployment path as something to design instead of something to follow.",
   },
   {
-    title: "ServiceHub — the client-facing seam.",
-    body: "Sole developer on a paid engagement means being the person who says “that costs this much of that.” I ran the requirements conversation and the trade-off negotiation directly, in terms the client could make decisions in.",
+    title: "Making my own discipline mechanical.",
+    body: "MoneyDock’s test suite lives in the build command rather than in CI, because a green badge is advisory and a build that refuses to produce a deployment is a constraint. Before the hardening pass I locked existing behaviour behind 100 tests written against untouched source, so any fix that changed something would be visibly wrong rather than arguably fine.",
   },
   {
-    title: "CuteHelper — deciding alone.",
-    body: "Founding something removes the person who tells you a feature isn’t worth it. RICE and the instrumentation plan exist because I needed an external check on my own judgment.",
+    title: "Publishing my own defects.",
+    body: "The Animatrixx write-up on this site names the secrets baked into a Docker image, the homepage rail that silently returns nothing, and the localStorage decision I would reverse. I would rather be the engineer who found those and said so than the one who shipped them and hoped nobody looked.",
   },
 ];

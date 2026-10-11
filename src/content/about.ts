@@ -8,48 +8,48 @@ export const aboutMeta: SectionMeta = {
 };
 
 export const professionalSummary: readonly string[] = [
-  "I’m a final-year Computer Science student who ended up working across the seam most teams put a handoff in.",
-  "The pattern is consistent across everything I’ve built: run the discovery, write the PRD, decide what doesn’t ship, build it, deploy it, then instrument it to find out whether the spec was right. On UrbanIQ that meant leading ten people and reconciling three user roles with different definitions of “resolved.” On ServiceHub it meant negotiating scope directly with a client against a fixed budget. On CuteHelper it means owning every layer, from the RICE score that killed features to the Electron main process.",
-  "I’m not a PM who can read code, and I’m not an engineer who writes tickets. I do both, and the reason I keep doing both is that the specs get better when you know what they cost to build.",
+  "I’m a backend engineer four years into production Python, and I’ve spent most of that time on the side of the line most teams put a handoff on.",
+  "The pattern is consistent across three startups and two solo products: write the service, model the data, then own the machine it runs on. At InstaAstro that meant Django and Celery alongside Grafana and Prometheus. At India IVF it meant the Django work and the DevOps work being the same job description. On Animatrixx it meant standing up nine containers and a metrics plane because there was nobody to ask for one. On MoneyDock it meant five ingestion pipelines, 272 tests, and being the person who has to read Search Console at midnight when indexation moves.",
+  "I’m not a developer who has heard of Docker, and I’m not an ops engineer who scripts a bit. I do both, and the reason I keep doing both is that the code gets better when you’re the one who has to keep it alive.",
 ];
 
 /** Four beats. Each one names what changed. */
 export const journey: readonly JourneyBeat[] = [
   {
-    year: "2024",
-    title: "Leading before managing.",
-    body: "UrbanIQ was ten people and three user roles that disagreed about what a resolved complaint looked like. I learned that the hard part of product isn’t deciding what to build — it’s getting three groups to accept the same definition of done. It shipped, and it processed 4,000+ submissions in live use.",
-  },
-  {
-    year: "2024",
-    title: "Letting the data argue back.",
-    body: "After launch I ran exploratory analysis on all 4,000+ submissions in Python and Metabase. SLA breaches clustered by department in a way nobody had predicted. That’s when instrumentation stopped being a checkbox on the roadmap and became the reason I trust or distrust my own specs.",
+    year: "2022",
+    title: "Python, in production, immediately.",
+    body: "InstaAstro was a live consumer product and I was writing Django against it in my first year out. Two years and three months there taught me the difference between code that works and code that works at 9pm on a Sunday — and it’s where Celery, RabbitMQ, Prometheus and Grafana stopped being résumé words and became things I’d actually debugged.",
   },
   {
     year: "2025",
-    title: "Sharpening the method.",
-    body: "A year of deliberate practice alongside coursework: two published end-to-end case studies covering problem discovery, user research, opportunity sizing, competitive analysis and prioritization, done alongside the product management certifications. Writing product thinking down for an audience is a different skill from doing it.",
+    title: "The title said Django and DevOps.",
+    body: "At India IVF Fertility the two halves were formally one role. That year is when I stopped thinking of deployment as the last step of development and started thinking of the runtime as part of the design — because I was the one configuring nginx, the containers and the servers underneath what I’d just written.",
+  },
+  {
+    year: "2024 — 2025",
+    title: "Building the layer I’d always been handed.",
+    body: "Animatrixx is where I self-hosted everything on purpose: Django under uWSGI behind nginx, Celery on RabbitMQ, Redis, Elasticsearch, and a Prometheus, Loki and Grafana stack I stood up myself. It also has no tests, secrets I baked into a Docker image, and a homepage rail that silently returns nothing. I learned more from that list than from anything that went right.",
   },
   {
     year: "2026",
-    title: "Building at three altitudes.",
-    body: "Now: a client product where I’m the only developer and the requirements come straight from the person paying, a team codebase at Docmize where I have to fit someone else’s architecture, and CuteHelper, where every decision is mine and every mistake is too.",
+    title: "Doing it properly the second time.",
+    body: "MoneyDock is the correction. 272 tests wired into the build command so a failure blocks the deploy rather than filing a ticket. Timeouts on all twelve outbound calls. A hardening pass with fourteen findings, each pinned by a test written against the unmodified source first. Every one of those disciplines exists because Animatrixx showed me what its absence costs.",
   },
 ];
 
 export const currentFocus: readonly FocusBlock[] = [
   {
     label: "What I’m working on right now",
-    body: "whether CuteHelper’s “teach, don’t do” principle survives contact with real users. I’m instrumenting follow-up rate, average query length and response gap to find where the loop breaks down — because a companion that answers for you and a companion that teaches you look identical in a demo and completely different in the data.",
+    body: "MoneyDock’s indexation curve. Impressions went from roughly a thousand a day to a peak near five and a half thousand across July, which is mass indexation at deep positions rather than a ranking win — new pages enter around position 70 and drag the average down while nothing that was ranking has moved. The work is turning that volume into position: pruning genuinely thin pages, and making sure every page still standing has a computed number on it that exists nowhere else.",
   },
   {
     label: "What I’m getting better at",
-    body: "working inside an existing codebase and someone else’s architectural decisions. Docmize is the first environment where I’m not the one who chose the structure, and it’s made me a better spec writer — a requirement reads differently when you know what it costs the person implementing it.",
+    body: "Instrumenting features rather than infrastructure. I had a four-second scrape interval on request rates and no way to notice that an entire homepage rail had been returning an empty list for weeks. Uptime and correctness are two different questions and I was only asking one of them.",
   },
   {
     label: "What I’m looking for",
-    body: "an Associate or Technical Product Management role on a product where the technical layer is the product, not a delivery detail. AI products, developer tools, or anything where the spec has to be written by someone who understands what the model can and can’t do.",
+    body: "A backend or platform role where owning the runtime is part of the job rather than another team’s. Python and Django services, real data volume, and infrastructure I’m expected to understand rather than file tickets against. I’d rather be somewhere the on-call rotation includes the people who wrote the code.",
   },
 ];
 
-export const personalNote = "Based in Gurugram, Haryana. Graduating August 2026.";
+export const personalNote = "Based in Noida, Uttar Pradesh. MCA, IGNOU, 2025.";

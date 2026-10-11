@@ -95,8 +95,10 @@ export function FlowDiagram({
 }
 
 /* ==========================================================================
-   BranchDiagram — ServiceHub. One entry point that resolves into two experiences,
-   with operations deliberately detached. The shape is the architectural argument.
+   BranchDiagram — Animatrixx. One entry point into one application, which resolves into
+   two distinct read paths, with the async and observability plane deliberately drawn
+   detached because it observes the system rather than serving it. The shape is the
+   architectural argument.
    ========================================================================== */
 
 export function BranchDiagram({

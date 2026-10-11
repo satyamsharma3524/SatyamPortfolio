@@ -93,7 +93,7 @@ export function SiteHeader({ variant = "home" }: { variant?: "home" | "sub" }) {
             {profile.name}
           </span>
           <span className="hidden font-mono text-mono uppercase tracking-[0.14em] text-ink-4 sm:inline">
-            Builder-PM
+            Backend &amp; Platform
           </span>
         </Link>
 
@@ -139,15 +139,26 @@ export function SiteHeader({ variant = "home" }: { variant?: "home" | "sub" }) {
               order would not decide which wins. On small screens the résumé lives in
               the sheet instead. */}
           <span className="hidden sm:block">
-            <Button
-              href={profile.resumeHref}
-              variant="secondary"
-              size="sm"
-              external
-              aria-label={a11y.resumeLink}
-            >
-              {buttons.heroSecondary}
-            </Button>
+            {profile.resumeAvailable ? (
+              <Button
+                href={profile.resumeHref}
+                variant="secondary"
+                size="sm"
+                external
+                aria-label={a11y.resumeLink}
+              >
+                {buttons.heroSecondary}
+              </Button>
+            ) : (
+              <Button
+                href={profile.links.linkedin}
+                variant="secondary"
+                size="sm"
+                external
+              >
+                LinkedIn
+              </Button>
+            )}
           </span>
 
           {/* Mobile trigger — a labelled control, not a bare hamburger. */}
@@ -213,15 +224,26 @@ export function SiteHeader({ variant = "home" }: { variant?: "home" | "sub" }) {
                   </li>
                 ))}
                 <li className="flex flex-wrap items-center gap-3 py-4">
-                  <Button
-                    href={profile.resumeHref}
-                    variant="secondary"
-                    size="sm"
-                    external
-                    aria-label={a11y.resumeLink}
-                  >
-                    {buttons.heroSecondary}
-                  </Button>
+                  {profile.resumeAvailable ? (
+                    <Button
+                      href={profile.resumeHref}
+                      variant="secondary"
+                      size="sm"
+                      external
+                      aria-label={a11y.resumeLink}
+                    >
+                      {buttons.heroSecondary}
+                    </Button>
+                  ) : (
+                    <Button
+                      href={profile.links.linkedin}
+                      variant="secondary"
+                      size="sm"
+                      external
+                    >
+                      LinkedIn
+                    </Button>
+                  )}
                   <ThemeToggle />
                 </li>
               </ul>

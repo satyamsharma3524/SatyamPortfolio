@@ -101,11 +101,19 @@ function NamedBlocks({
   );
 }
 
+/**
+ * Animatrixx gets the branch diagram because its architecture genuinely forks — one
+ * proxy into one application, which resolves into two different read paths, with the
+ * async and observability plane deliberately drawn detached because it observes the
+ * system rather than serving it. MoneyDock is a pipeline and reads top to bottom.
+ */
+const BRANCH_DIAGRAM_SLUGS = new Set(["animatrixx"]);
+
 function ProjectDiagram({ project, compact }: { project: Project; compact?: boolean }) {
   const flow = project.architecture.flow;
   if (!flow) return null;
   const label = "Architecture";
-  return project.slug === "servicehub" ? (
+  return BRANCH_DIAGRAM_SLUGS.has(project.slug) ? (
     <BranchDiagram nodes={flow} label={label} compact={compact} />
   ) : (
     <FlowDiagram nodes={flow} label={label} compact={compact} />

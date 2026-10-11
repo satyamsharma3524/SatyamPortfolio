@@ -5,7 +5,7 @@ import { evidenceLegend, projectColumns, skillGroups } from "@/src/content/skill
 import type { Evidence, ProjectKey } from "@/src/content/types";
 
 /** Every group is rendered against the same five columns, so this reads as one graphic. */
-const COLUMNS: readonly ProjectKey[] = ["CH", "UIQ", "SH", "DZ", "CS"];
+const COLUMNS: readonly ProjectKey[] = ["MD", "AX", "HT", "IVF", "IA"];
 const GRID = `minmax(0,1fr) repeat(${COLUMNS.length}, 3.25rem)`;
 
 function Mark({

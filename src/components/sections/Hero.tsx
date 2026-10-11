@@ -13,6 +13,57 @@ const PORTRAIT_BLUR =
   "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQAgCdASoMABAAA4BaJZQC7AD0cnt56UYAAP7dngZY6RH13ERkdiMPw5JaYpWHbtR8I4sVbZkK6u/QZ3ZJA60Ll5EWX7pPCpwu89YVKQ45DABmU19YApHkgAA=";
 
 /**
+ * Portrait, or the panel that stands in for one.
+ *
+ * A missing photograph must not become a broken image or a stock face. While
+ * `profile.portrait` is null this renders the initials, role and location in the site's
+ * own type at the same 4:5 ratio — so the grid, the shadow and the proof strip's
+ * overhang are all unchanged, and the slot reads as deliberate. Set `profile.portrait`
+ * to a real path and the photograph takes over with no other edit.
+ */
+function Portrait() {
+  if (profile.portrait) {
+    return (
+      <Image
+        src={profile.portrait}
+        alt={hero.portraitAlt}
+        width={1000}
+        height={1333}
+        priority
+        placeholder="blur"
+        blurDataURL={PORTRAIT_BLUR}
+        sizes="(max-width: 640px) 88vw, (max-width: 1023px) 22rem, 28vw"
+        className="size-full object-cover object-top"
+      />
+    );
+  }
+
+  /*
+    Everything sits in the upper 60% of the panel. The proof strip overhangs the bottom
+    of this box by design, so anything set near the lower edge would be occluded by it.
+  */
+  return (
+    <div className="flex size-full flex-col gap-5 p-7 pb-[42%] lg:p-8 lg:pb-[42%]">
+      <span
+        aria-hidden="true"
+        className="font-mono text-mono uppercase tracking-[0.16em] text-ink-4"
+      >
+        {hero.portraitFallback.sub}
+      </span>
+      <span
+        aria-hidden="true"
+        className="text-[clamp(3.5rem,9vw,5.5rem)] font-medium leading-[0.82] tracking-[-0.05em] text-ink"
+      >
+        {hero.portraitFallback.initials}
+      </span>
+      <span className="max-w-[18ch] font-mono text-mono uppercase leading-[1.7] tracking-[0.13em] text-ink-3">
+        {hero.portraitFallback.caption}
+      </span>
+    </div>
+  );
+}
+
+/**
  * Hero.
  *
  * Three bands, each answering one question in order:
@@ -62,14 +113,21 @@ export function Hero() {
                 <Button href="#work" variant="primary">
                   {buttons.heroPrimary}
                 </Button>
-                <Button
-                  href={profile.resumeHref}
-                  variant="secondary"
-                  external
-                  aria-label={a11y.resumeLink}
-                >
-                  {buttons.heroSecondary}
-                </Button>
+                {/* No dead links on this site: the résumé button waits for the file. */}
+                {profile.resumeAvailable ? (
+                  <Button
+                    href={profile.resumeHref}
+                    variant="secondary"
+                    external
+                    aria-label={a11y.resumeLink}
+                  >
+                    {buttons.heroSecondary}
+                  </Button>
+                ) : (
+                  <Button href={profile.links.linkedin} variant="secondary" external>
+                    LinkedIn
+                  </Button>
+                )}
                 <span className="ml-1 flex items-center gap-3">
                   <a
                     href={`mailto:${profile.email}`}
@@ -92,17 +150,7 @@ export function Hero() {
             <Reveal y={28} delay={0.06}>
               <div className="relative mx-auto w-full max-w-[24rem] lg:mx-0 lg:max-w-none">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[10px] border border-line bg-inset shadow-e3">
-                  <Image
-                    src="/images/shivam-sharma-portrait.webp"
-                    alt={hero.portraitAlt}
-                    width={1000}
-                    height={1333}
-                    priority
-                    placeholder="blur"
-                    blurDataURL={PORTRAIT_BLUR}
-                    sizes="(max-width: 640px) 88vw, (max-width: 1023px) 22rem, 28vw"
-                    className="size-full object-cover object-top"
-                  />
+                  <Portrait />
                 </div>
 
                 {/* The proof strip sits on its own surface, overhanging the image into

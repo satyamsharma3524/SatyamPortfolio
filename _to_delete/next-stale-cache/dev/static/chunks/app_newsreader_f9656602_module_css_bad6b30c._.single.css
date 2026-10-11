@@ -1,0 +1,27 @@
+/* [project]/app/newsreader_f9656602.module.css [app-client] (css) */
+@font-face {
+  font-family: newsreader;
+  src: url("../media/Newsreader_latin-s.p.15511e6c.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 200 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: newsreader Fallback;
+  src: local(Arial);
+  ascent-override: 76.71%;
+  descent-override: 27.66%;
+  line-gap-override: 0.0%;
+  size-adjust: 95.82%;
+}
+
+.newsreader_f9656602-module__yB31HW__className {
+  font-family: newsreader, newsreader Fallback, ui-serif, Georgia, Times New Roman, serif;
+}
+
+.newsreader_f9656602-module__yB31HW__variable {
+  --font-newsreader: "newsreader", "newsreader Fallback", ui-serif, Georgia, Times New Roman, serif;
+}
+
+/*# sourceMappingURL=app_newsreader_f9656602_module_css_bad6b30c._.single.css.map*/

@@ -1,12 +1,14 @@
 /**
- * Section 9 — Skills.
+ * Section 9 — Stack.
  *
- * Grouped as a hiring manager would want to scan them, with every entry pointing
- * at where it was used. No proficiency bars, no self-ratings, no percentages.
+ * Grouped as a hiring engineer would scan them, with every entry pointing at where it
+ * was used. No proficiency bars, no self-ratings, no percentages — a five-star rating
+ * on "Docker" tells a reader nothing they can check.
  *
- * Two evidence levels, exactly as the source content marks them:
- *   "stated"   (✓) — the résumé states this skill in that project’s bullets.
- *   "inferred" (○) — plausible mapping, not yet attributed in writing.
+ * Two evidence levels, and the distinction is load-bearing:
+ *   "stated"   (■) — verifiable in that codebase or that role. If someone opened the
+ *                    repository, they would find it.
+ *   "inferred" (□) — in my toolkit, but not attributable to that specific column.
  *
  * The empty cells are deliberate. They are what make the filled ones mean something.
  */
@@ -15,126 +17,161 @@ import type { EvidencedSkill, SectionMeta, SkillGroup } from "./types";
 
 export const skillsMeta: SectionMeta = {
   id: "skills",
-  eyebrow: "04 · Toolkit",
+  eyebrow: "04 · Stack",
   heading: "What I use, and where I used it",
   intro:
-    "Every item below appears in work I’ve done. Hover a skill to highlight where it was used.",
+    "Two of these columns are projects with full write-ups on this site; three are production codebases at employers. Hover a skill to light up where it was used.",
 };
 
-/** Column key: CH CuteHelper · UIQ UrbanIQ · SH ServiceHub · DZ Docmize · CS Published case studies */
+/**
+ * Column key: MD MoneyDock · AX Animatrixx · HT HT Media · IVF India IVF · IA InstaAstro
+ *
+ * The two project columns carry `slug`s because their case studies are on this site and
+ * a reader can go check the claim. The three employer columns do not — those codebases
+ * are not public, and a link that cannot exist should not pretend to.
+ */
 export const projectColumns = {
-  CH: { short: "CH", name: "CuteHelper", slug: "cutehelper" },
-  UIQ: { short: "UIQ", name: "UrbanIQ", slug: "urbaniq" },
-  SH: { short: "SH", name: "ServiceHub", slug: "servicehub" },
-  DZ: { short: "DZ", name: "Docmize", slug: "docmize" },
-  CS: { short: "CS", name: "Published case studies", slug: null },
+  MD: { short: "MD", name: "MoneyDock", slug: "moneydock" },
+  AX: { short: "AX", name: "Animatrixx", slug: "animatrixx" },
+  HT: { short: "HT", name: "HT Media", slug: null },
+  IVF: { short: "IVF", name: "India IVF Fertility", slug: null },
+  IA: { short: "IA", name: "InstaAstro", slug: null },
 } as const;
 
 export const evidenceLegend = [
-  { level: "stated", label: "Named in that project’s write-up" },
-  { level: "inferred", label: "In my toolkit — not yet attributed to a project" },
+  { level: "stated", label: "Verifiable in that codebase or role" },
+  { level: "inferred", label: "In my toolkit — not attributed there" },
 ] as const;
+
+const COLUMNS = ["MD", "AX", "HT", "IVF", "IA"] as const;
 
 export const skillGroups: readonly SkillGroup[] = [
   {
-    name: "Product",
-    columns: ["CH", "UIQ", "SH", "DZ", "CS"],
+    name: "Backend",
+    columns: COLUMNS,
     rows: [
+      { skill: "Python", cells: { AX: "stated", HT: "stated", IVF: "stated", IA: "stated" } },
+      { skill: "Django", cells: { AX: "stated", HT: "stated", IVF: "stated", IA: "stated" } },
+      { skill: "Django REST Framework", cells: { AX: "stated", IVF: "stated", IA: "stated" } },
+      { skill: "Celery", cells: { AX: "stated", IA: "stated" } },
+      { skill: "RabbitMQ", cells: { AX: "stated", IA: "stated" } },
       {
-        skill: "Product Discovery",
-        cells: { CH: "stated", UIQ: "inferred", SH: "stated", CS: "stated" },
-      },
-      { skill: "User Research", cells: { CH: "inferred", UIQ: "inferred", CS: "stated" } },
-      { skill: "PRD Authoring", cells: { CH: "stated", UIQ: "stated" } },
-      {
-        skill: "User Stories & Acceptance Criteria",
-        cells: { CH: "stated", UIQ: "stated" },
+        skill: "REST API design",
+        cells: { MD: "stated", AX: "stated", HT: "inferred", IVF: "inferred", IA: "stated" },
       },
       {
-        skill: "Feature Prioritization (RICE)",
-        cells: { CH: "stated", UIQ: "inferred", CS: "stated" },
+        skill: "Object-Relational Mapping",
+        cells: { AX: "stated", IVF: "inferred", IA: "stated" },
       },
-      { skill: "Roadmapping", cells: { UIQ: "stated" } },
-      { skill: "MVP Definition", cells: { CH: "stated", SH: "stated" } },
+      { skill: "ETL / data pipelines", cells: { MD: "stated", AX: "stated", IVF: "stated" } },
+      { skill: "Web scraping", cells: { MD: "stated", AX: "stated" } },
+      { skill: "System architecture", cells: { MD: "stated", AX: "stated" } },
       {
-        skill: "Stakeholder & Client Management",
-        cells: { UIQ: "inferred", SH: "stated", DZ: "inferred" },
+        skill: "Debugging",
+        cells: { MD: "stated", AX: "stated", HT: "inferred", IVF: "inferred", IA: "stated" },
       },
-      { skill: "KPI Definition", cells: { CH: "stated", UIQ: "inferred" } },
-      { skill: "Agile & Scrum", cells: { UIQ: "inferred", DZ: "inferred" } },
     ],
-    note: "Opportunity Sizing and Competitive Analysis belong to the published case studies too — they’re in the product analysis method list rather than repeated here.",
+    note: "The MoneyDock column is empty for Django and Celery on purpose — that project is Next.js and cron route handlers, not Python. Claiming it there would make every other mark in this matrix worth less.",
   },
   {
-    name: "AI Product",
-    columns: ["CH", "UIQ", "SH", "DZ"],
+    name: "Data",
+    columns: COLUMNS,
     rows: [
-      { skill: "LLM Integration", cells: { CH: "stated", UIQ: "inferred", DZ: "inferred" } },
-      { skill: "AI Workflow Design", cells: { CH: "stated", UIQ: "inferred", DZ: "stated" } },
-      { skill: "Prompt Engineering", cells: { CH: "inferred" } },
-      { skill: "Voice Interfaces", cells: { CH: "stated" } },
-      { skill: "Context-Aware Systems", cells: { CH: "stated" } },
+      { skill: "MariaDB / MySQL", cells: { AX: "stated", IVF: "stated", IA: "stated" } },
+      { skill: "PostgreSQL", cells: { HT: "inferred", IVF: "inferred", IA: "inferred" } },
+      { skill: "MongoDB", cells: { MD: "stated" } },
+      { skill: "Redis", cells: { AX: "stated", IA: "inferred" } },
+      { skill: "Elasticsearch", cells: { AX: "stated" } },
+      { skill: "Database design", cells: { MD: "stated", AX: "stated", IVF: "stated" } },
+      { skill: "Database administration", cells: { AX: "stated", IVF: "stated" } },
+      { skill: "Time-series modelling", cells: { MD: "stated" } },
+      { skill: "Caching strategy", cells: { MD: "stated", AX: "stated" } },
     ],
   },
   {
-    name: "Engineering",
-    columns: ["CH", "UIQ", "SH", "DZ"],
+    name: "Platform & operations",
+    columns: COLUMNS,
     rows: [
-      { skill: "Electron", cells: { CH: "stated" } },
       {
-        skill: "React",
-        cells: { CH: "stated", UIQ: "inferred", SH: "inferred", DZ: "inferred" },
+        skill: "Linux",
+        cells: { AX: "stated", HT: "stated", IVF: "stated", IA: "stated" },
       },
-      { skill: "TypeScript", cells: { CH: "stated", SH: "inferred" } },
-      { skill: "Next.js", cells: { SH: "inferred", DZ: "inferred" } },
-      {
-        skill: "JavaScript",
-        cells: { CH: "inferred", UIQ: "inferred", SH: "inferred", DZ: "inferred" },
-      },
-      { skill: "Python", cells: { UIQ: "stated" } },
-      { skill: "Supabase", cells: { SH: "inferred" } },
-      { skill: "Prisma", cells: { SH: "inferred" } },
-      { skill: "REST APIs", cells: { UIQ: "inferred", SH: "inferred", DZ: "inferred" } },
-      {
-        skill: "Git",
-        cells: { CH: "inferred", UIQ: "inferred", SH: "inferred", DZ: "inferred" },
-      },
+      { skill: "Docker", cells: { AX: "stated", IVF: "stated", IA: "stated" } },
+      { skill: "nginx", cells: { AX: "stated", IVF: "inferred" } },
+      { skill: "uWSGI", cells: { AX: "stated" } },
+      { skill: "AWS", cells: { MD: "stated", AX: "stated", HT: "inferred", IVF: "inferred" } },
+      { skill: "Vultr", cells: { AX: "inferred", IVF: "inferred" } },
+      { skill: "CI/CD", cells: { MD: "stated", AX: "stated", IVF: "stated" } },
+      { skill: "System deployment", cells: { MD: "stated", AX: "stated", IVF: "stated" } },
+      { skill: "Prometheus", cells: { AX: "stated", IA: "stated" } },
+      { skill: "Grafana", cells: { AX: "stated", IA: "stated" } },
+      { skill: "Loki / log shipping", cells: { AX: "stated" } },
+      { skill: "Kubernetes", cells: {} },
+    ],
+    note: "Kubernetes has no mark in any column. It is on my LinkedIn and it is not yet in anything I have shipped, so it gets an empty row rather than a generous one.",
+  },
+  {
+    name: "Product surface",
+    columns: COLUMNS,
+    rows: [
+      { skill: "Next.js", cells: { MD: "stated", AX: "stated" } },
+      { skill: "React", cells: { MD: "stated", AX: "stated" } },
+      { skill: "TypeScript", cells: { MD: "stated", AX: "stated" } },
+      { skill: "Tailwind CSS", cells: { MD: "stated", AX: "stated" } },
+      { skill: "Vitest / Testing Library", cells: { MD: "stated" } },
+      { skill: "Programmatic SEO", cells: { MD: "stated" } },
+      { skill: "Structured data (JSON-LD)", cells: { MD: "stated" } },
+      { skill: "Git", cells: { MD: "stated", AX: "stated", HT: "stated", IVF: "stated", IA: "stated" } },
     ],
   },
 ];
 
-/** Data & Analytics is split in two on purpose. An honest boundary is load-bearing. */
+/**
+ * Testing is split out deliberately. It is the clearest before-and-after in my work —
+ * zero tests on one project, 272 gating deploys on the next — and burying that inside a
+ * matrix row would lose the only part of it that matters.
+ */
 export const dataAnalytics = {
-  name: "Data & Analytics",
-  shippedLabel: "Used in shipped work",
+  name: "Testing & correctness",
+  shippedLabel: "In shipped work",
   shipped: [
-    { skill: "Python — pandas", where: "UrbanIQ" },
-    { skill: "Metabase", where: "UrbanIQ" },
-    { skill: "Exploratory Data Analysis", where: "UrbanIQ — on 4,000+ submissions" },
+    { skill: "272 tests gating every deploy", where: "MoneyDock — in the build command" },
+    { skill: "Unit-tested financial mathematics", where: "MoneyDock — pure, I/O-free modules" },
+    { skill: "Regression tests pinning each hardening fix", where: "MoneyDock — 14 findings" },
+    { skill: "Content-quality assertions as tests", where: "MoneyDock — body length, FAQ counts" },
   ] satisfies readonly EvidencedSkill[],
-  workingLabel: "Working knowledge — coursework and certification",
+  workingLabel: "Practices I apply, not yet all in one codebase",
   working: [
-    "SQL (JOINs, CTEs, window functions)",
-    "NumPy",
-    "matplotlib",
-    "Mixpanel",
-    "Funnel & Cohort Analysis",
-    "Retention Analysis",
-    "A/B Testing",
-    "Google Looker Studio",
-    "Jupyter",
+    "Vitest",
+    "Testing Library",
+    "jsdom",
+    "Contract tests for API routes",
+    "Pure-function extraction",
+    "Fail-open vs fail-closed defaults",
+    "Timeouts on all outbound I/O",
+    "Graceful degradation contracts",
+    "Idempotent ETL",
+    "Backoff with jitter",
   ],
 } as const;
 
-export const tools = [
-  { tool: "Jira", where: "Docmize, UrbanIQ", level: "inferred" },
-  { tool: "Notion", where: "Across projects; published case studies", level: "inferred" },
-  { tool: "Jupyter", where: "UrbanIQ", level: "inferred" },
-  { tool: "Google Looker Studio", where: "Coursework", level: "coursework" },
-] as const;
+interface ToolEntry {
+  readonly tool: string;
+  readonly where: string;
+  readonly level: "stated" | "inferred" | "coursework";
+}
+
+export const tools: readonly ToolEntry[] = [
+  { tool: "Prometheus + Grafana", where: "Animatrixx, InstaAstro", level: "stated" },
+  { tool: "Loki + Promtail", where: "Animatrixx", level: "stated" },
+  { tool: "Docker Compose", where: "Animatrixx", level: "stated" },
+  { tool: "Google Search Console", where: "MoneyDock", level: "stated" },
+  { tool: "Vitest", where: "MoneyDock", level: "stated" },
+  { tool: "Kubernetes", where: "Not yet shipped", level: "inferred" },
+];
 
 export const skillsMatrixCaption =
-  "The empty cells are the point — they’re what makes the filled ones mean something.";
+  "The empty cells are the point. A matrix where every row is full is a list of words, not evidence — so Kubernetes has no marks, and Django has none under MoneyDock.";
 
 export const skillsClosing =
-  "The list is short on purpose. Nothing on it is here because it looks good on a list.";
+  "Nothing on this list is here because it looks good on a list. Three of these I learned because a system I had already shipped broke without them.";

@@ -6,7 +6,17 @@
  * here; no component authors copy of its own.
  */
 
-export type ProjectStatus = "Delivered" | "In development" | "In progress";
+/**
+ * "Live" is the honest label for a product that is deployed and serving real traffic
+ * while still being actively worked on. "In development" understates a site with
+ * indexed pages and search impressions; "Delivered" implies it was handed over and
+ * left alone. Both of the projects here are neither.
+ */
+export type ProjectStatus =
+  | "Live"
+  | "Delivered"
+  | "In development"
+  | "In progress";
 
 export interface NavItem {
   readonly label: string;
@@ -58,8 +68,17 @@ export interface PracticeStep {
   readonly body: string;
 }
 
-/** Column keys for the skills matrix. */
-export type ProjectKey = "CH" | "UIQ" | "SH" | "DZ" | "CS";
+/**
+ * Column keys for the skills matrix.
+ *
+ * Two of these are projects with case studies on this site; three are employers. That
+ * mix is deliberate — a skill proven in production at a company is stronger evidence
+ * than the same skill proven in a side project, and the matrix should be able to say
+ * which one it was.
+ *
+ * MD MoneyDock · AX Animatrixx · HT HT Media · IVF India IVF Fertility · IA InstaAstro
+ */
+export type ProjectKey = "MD" | "AX" | "HT" | "IVF" | "IA";
 
 /** "✓" — stated in that project’s write-up. "○" — inferred, not yet attributed. */
 export type Evidence = "stated" | "inferred";

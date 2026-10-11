@@ -3,14 +3,11 @@ import { Chip, Eyebrow, Hairline } from "@/src/components/ui/primitives";
 import { analysis } from "@/src/content/analysis";
 
 /**
- * Product analysis — the published Notion case studies.
+ * Design documents — the engineering write-ups that ship alongside the MoneyDock code.
  *
- * The two titles and URLs are not in the source content, and guessing which products
- * were analysed would be the most damaging error available on this page. So the
- * section renders what is real: the framing, the arc each write-up runs, and the
- * methods. The panel is drawn as two stacked sheets rotated half a degree in
- * opposite directions — two documents, not two tiles. The `Read on Notion` CTA is
- * intentionally absent until a real URL exists; there are no dead links on this site.
+ * The repository is private, so there are no URLs to link and none are drawn; the
+ * section renders what is real, which is what each document is for. The panel is two
+ * stacked sheets rotated half a degree in opposite directions — documents, not tiles.
  */
 export function ProductAnalysis() {
   return (
@@ -26,7 +23,7 @@ export function ProductAnalysis() {
             <Reveal y={12}>
               <Eyebrow className="mb-6 flex items-center gap-3">
                 <span aria-hidden="true" className="h-px w-7 shrink-0 bg-line-2" />
-                Also published
+                Also in the repository
               </Eyebrow>
             </Reveal>
 
@@ -91,9 +88,9 @@ export function ProductAnalysis() {
 
                   <Hairline className="my-7" />
 
-                  <Eyebrow className="mb-4 text-ink-4">What each write-up covers</Eyebrow>
+                  <Eyebrow className="mb-4 text-ink-4">What each document is for</Eyebrow>
                   <Stagger className="ruled border-t border-line" as="ol" stagger={0.05}>
-                    {analysis.stages.map((stage, index) => (
+                    {analysis.documents.map((stage, index) => (
                       <RevealChild key={stage.stage} as="li" y={8} className="py-3.5">
                         <div className="flex items-baseline gap-3.5">
                           <span

@@ -11,15 +11,13 @@ import type { Project } from "@/src/content/types";
 /**
  * Which visual each project carries on the index.
  *
- * Chosen so no two entries look alike, and so each one shows the thing that project
- * is actually strongest on: CuteHelper's pipeline, UrbanIQ's measured outcomes,
- * ServiceHub's branch architecture, and — for Docmize — the honest absence.
+ * Chosen so the two entries do not look alike, and so each shows what that project is
+ * actually strongest on: MoneyDock's measured outcomes — the numbers are the argument
+ * there — and Animatrixx's service topology, where the shape of the stack is the point.
  */
 const INDEX_VISUAL: Record<string, "flow" | "metrics" | "branch" | "media"> = {
-  cutehelper: "flow",
-  urbaniq: "metrics",
-  servicehub: "branch",
-  docmize: "media",
+  moneydock: "metrics",
+  animatrixx: "branch",
 };
 
 function ProjectVisual({ project }: { project: Project }) {
@@ -139,7 +137,7 @@ export function Work() {
     <Section id={workMeta.id}>
       <SectionHead
         meta={workMeta}
-        headingLines={["Four products,", "start to finish"]}
+        headingLines={["Two products,", "built and operated"]}
         layout="split"
       />
 

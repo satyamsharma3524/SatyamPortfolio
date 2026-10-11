@@ -1,4 +1,9 @@
-/** Section 6 — Currently. Momentum is the strongest signal a student can send. */
+/**
+ * Section 6 — Currently.
+ *
+ * Three live threads: the day job, and the two products that are still being worked on
+ * rather than parked. Momentum is what separates a portfolio from an archive.
+ */
 
 import type { CurrentlyEntry, SectionMeta } from "./types";
 
@@ -7,38 +12,37 @@ export const currentlyMeta: SectionMeta = {
   eyebrow: "01 · Now",
   heading: "Three things in flight",
   intro:
-    "All three are live right now — a team codebase, a client product built and handed over, and one of my own in active development.",
+    "A production codebase inside a large media company, and two products I built and still operate myself — one of them serving live search traffic today.",
 };
 
 export const currently: readonly CurrentlyEntry[] = [
   {
-    name: "Docmize",
-    period: "2026 — Present",
-    role: "Software Developer Intern",
+    name: "HT Media",
+    period: "Mar 2026 — Present",
+    role: "Software Engineer",
     summary:
-      "Frontend interfaces and dashboards for an AI-integrated hospital management system, working inside an existing engineering team and codebase.",
+      "Backend and infrastructure work inside one of India’s largest media groups — an existing codebase, existing architectural decisions, and a scale of traffic no side project reaches.",
     live: true,
-    caseStudy: "docmize",
   },
   {
-    name: "ServiceHub Private Limited",
-    period: "2026 — Present",
-    role: "Freelance Product Developer",
+    name: "MoneyDock",
+    period: "Dec 2025 — Present",
+    role: "Solo engineer — built and operated",
     summary:
-      "Sole developer on a paid client engagement — a two-sided services marketplace, built and handed over.",
+      "A personal-finance platform for the Indian market. 27 calculators, ~4,800 indexed pages, five external data feeds, 272 tests gating every deploy. Live at moneydock.in.",
     live: true,
-    caseStudy: "servicehub",
+    caseStudy: "moneydock",
   },
   {
-    name: "CuteHelper",
-    period: "Feb 2026 — Present",
-    role: "Founder & Product Engineer",
+    name: "Animatrixx",
+    period: "Aug 2024 — Present",
+    role: "Solo engineer — build and infrastructure",
     summary:
-      "Voice-first AI desktop companion, instrumented to test whether its core loop actually works.",
+      "An anime and manga platform, and the nine-container stack it runs on: Django, Celery, RabbitMQ, Redis, MariaDB, Elasticsearch, and a full Prometheus/Grafana/Loki observability layer.",
     live: true,
-    caseStudy: "cutehelper",
+    caseStudy: "animatrixx",
   },
 ];
 
 export const currentlyTransition =
-  "Each of those has a full write-up below — the problem, the calls I made, and what the numbers said afterwards.";
+  "The two products below have full write-ups — the architecture, the decisions I’d defend, the ones I got wrong, and what the numbers said afterwards.";

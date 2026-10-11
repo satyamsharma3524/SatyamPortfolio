@@ -13,9 +13,17 @@ import {
   leadership,
 } from "@/src/content/background";
 
-/** Splits "4,000+ submissions processed in live use" into its figure and its clause. */
+/**
+ * Splits "4,800+ pages indexed by Google" into its figure and its clause, so the number
+ * can be set at display size and the clause at reading size.
+ *
+ * Accepts a leading figure with thousands separators, an optional decimal, an optional
+ * K/M suffix and an optional trailing + or % — "272", "4,800+", "65,400", "65.4K", "30%"
+ * — plus the two word-figures the copy uses. Anything else falls through to the
+ * no-figure branch and renders as a single line, which is a valid state rather than a bug.
+ */
 function splitAchievement(text: string) {
-  const match = /^([\d,]+\+?%?|Two|Paid)\s+(.*)$/.exec(text);
+  const match = /^(\d[\d,]*(?:\.\d+)?[KM]?[+%]?|Zero|Two|Paid)\s+(.*)$/.exec(text);
   if (!match) return { figure: null as string | null, rest: text };
   return { figure: match[1], rest: match[2] };
 }
@@ -169,10 +177,10 @@ export function Background() {
           </Stagger>
         </div>
 
-        {/* --------------------------------------------------------- Leadership */}
+        {/* ---------------------------------------------------------- Ownership */}
         <div className="mt-20 lg:mt-24">
           <Reveal y={12}>
-            <Eyebrow className="mb-8 text-ink-4">Leadership</Eyebrow>
+            <Eyebrow className="mb-8 text-ink-4">Ownership</Eyebrow>
           </Reveal>
           <Stagger className="grid gap-x-10 gap-y-10 lg:grid-cols-3" stagger={0.07}>
             {leadership.map((item) => (

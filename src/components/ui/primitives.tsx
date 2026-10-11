@@ -54,12 +54,14 @@ export function Badge({
    ========================================================================== */
 
 const statusTone: Record<ProjectStatus, string> = {
+  Live: "text-accent",
   Delivered: "text-ink-2",
   "In development": "text-accent",
   "In progress": "text-accent",
 };
 
 const statusDot: Record<ProjectStatus, string> = {
+  Live: "bg-accent",
   Delivered: "bg-ink-4",
   "In development": "bg-accent",
   "In progress": "bg-accent",

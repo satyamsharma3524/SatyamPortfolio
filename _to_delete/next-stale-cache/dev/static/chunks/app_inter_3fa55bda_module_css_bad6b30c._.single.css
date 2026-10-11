@@ -1,0 +1,27 @@
+/* [project]/app/inter_3fa55bda.module.css [app-client] (css) */
+@font-face {
+  font-family: inter;
+  src: url("../media/Inter_latin-s.p.ad07bc55.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: inter Fallback;
+  src: local(Arial);
+  ascent-override: 89.79%;
+  descent-override: 22.36%;
+  line-gap-override: 0.0%;
+  size-adjust: 107.89%;
+}
+
+.inter_3fa55bda-module__snzOgG__className {
+  font-family: inter, inter Fallback, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+.inter_3fa55bda-module__snzOgG__variable {
+  --font-inter: "inter", "inter Fallback", ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+/*# sourceMappingURL=app_inter_3fa55bda_module_css_bad6b30c._.single.css.map*/

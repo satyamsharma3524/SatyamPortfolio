@@ -1,12 +1,14 @@
 /**
  * Section 10 — Work. Case studies.
  *
- * Ordered by what is hardest to fake. Every field is transcribed from the source
- * content; the `metrics` values are exact splits of the achievement lines in
- * Section 11, so no number appears without the condition it was measured under.
+ * Two projects, at full depth, rather than four at brochure depth. Both are deployed
+ * and serving real traffic, and both are solo builds — which means every decision
+ * recorded here was mine, including the ones I would not make again.
  *
- * Links resolve to the "link-unavailable" clauses from Section 4 rather than to a
- * dead `#`. Replace them with real URLs as they become available.
+ * Rule applied throughout: every number carries the condition it was measured under,
+ * and nothing is claimed that a reader with the repository open could contradict. The
+ * `futureImprovements` sections are where the honest gaps live, and they are the
+ * sections I would point an interviewer at first.
  */
 
 import { unavailable, emptyStates } from "./microcopy";
@@ -15,765 +17,545 @@ import type { Project, SectionMeta } from "./types";
 export const workMeta: SectionMeta = {
   id: "work",
   eyebrow: "02 · Work",
-  heading: "Four products, start to finish",
+  heading: "Two products, built and operated",
   intro:
-    "Each write-up covers the same ground: what the problem was, how I scoped it, what I built, what broke, and what I’d do differently. Ordered by what I think is hardest to fake.",
+    "Each write-up covers the same ground: what the problem was, how the system is shaped, the decisions I would defend under questioning, the ones that turned out wrong, and what is still missing. Ordered by what is hardest to fake.",
 };
 
 export const projects: readonly Project[] = [
   /* ======================================================================== */
   {
-    slug: "cutehelper",
-    name: "CuteHelper",
-    status: "In development",
-    role: "Founder & Product Engineer",
-    kind: "AI Desktop Companion",
-    period: "Feb 2026 — Present",
-    metaTitle: "CuteHelper — Voice-first AI desktop companion",
+    slug: "moneydock",
+    name: "MoneyDock",
+    status: "Live",
+    role: "Solo engineer — architecture, build, data pipelines, operations",
+    kind: "Personal-Finance Platform · FinTech",
+    period: "Dec 2025 — Present",
+    metaTitle: "MoneyDock — a solo-built financial platform, ~4,800 pages behind 272 tests",
     cardBlurb:
-      "A transparent, always-on-top AI companion that listens instead of waiting to be typed at. RICE-scoped to two workflows, built front to back, instrumented to test whether it teaches or just answers.",
+      "A no-signup financial platform for Indian retail investors: 27 hand-built calculators, ~1,800 stock pages and ~3,500 mutual-fund pages computed from live NSE and AMFI feeds, and 272 automated tests wired into the build command so a failing test blocks the deploy.",
     rationale:
-      "Founder-level ownership across product and engineering. The rarest combination on the page.",
-    metrics: [],
+      "A solo build carrying real production load, real money-adjacent correctness requirements, and a test suite that gates its own deploys. The closest thing on this page to a small engineering team’s output.",
+    metrics: [
+      { value: "65.4K", label: "Google search impressions · 12 months to Aug 2026" },
+      { value: "969", label: "organic clicks · same window" },
+      { value: "~4,800", label: "pages indexed · ~5,100 in the sitemap" },
+      { value: "272", label: "automated tests · a failure blocks the deploy" },
+      { value: "27", label: "financial calculators, hand-derived" },
+      { value: "5", label: "live external data feeds" },
+    ],
     overview: [
-      "CuteHelper is a transparent, always-on-top desktop AI companion built to cut context switching for students and knowledge workers. I own it end to end: the discovery that justified it, the RICE scoring that cut it down, the PRD and architecture that specified it, the Electron application that implements it, and the instrumentation that will tell me whether the core idea holds.",
-      "The design principle is “teach, don’t do.” That distinction is the entire product, and it’s also the hardest thing to verify — which is why the metrics matter more here than anywhere else I’ve worked.",
+      "MoneyDock is a free, no-signup personal-finance platform for Indian retail investors, live at moneydock.in. It does four things: runs 27 financial calculations that recompute live as you drag a slider; serves a page per NSE-listed stock and per mutual fund with computed returns, annualised volatility and maximum drawdown; compares any two of them head-to-head with a ₹10,000-growth overlay; and reads the market — indices, forex, commodities, crypto, and gold and silver rates with the India duty and GST maths made explicit.",
+      "I built and operate all of it: the Next.js application, the MongoDB schema, the five ingestion pipelines, the 272-test suite, the SEO architecture that took it to roughly 4,800 indexed pages, and the decisions about what not to build. There is no team, and there is no separate ops function.",
+      "The interesting engineering here is not the calculators — it is that this is a money-adjacent product at programmatic scale. Both halves of that phrase constrain the design hard. Money-adjacent means a wrong number is worse than no number. Programmatic scale means thousands of near-identical pages, which is precisely the pattern Google’s March 2026 core update was built to demote. Most of what follows is the consequence of taking both of those seriously at the same time.",
     ],
     problem: [
-      "Every AI assistant asks you to leave what you’re doing. You switch to a browser tab, describe the thing on your screen in words, wait, read the answer, and switch back — and by then you’ve lost the thread you were holding.",
-      "For students and knowledge workers, that switch is the cost, not the answer. The assistant is fast; getting to the assistant is slow.",
-      "There’s a second, quieter problem. An assistant that’s good at giving answers is very good at removing the need to understand them. For a student, that’s not a feature — it’s the failure mode.",
+      "Indian retail investing has an information problem that is not a lack of information. Calculator sites exist in abundance; most gate results behind a signup, bury them under ad interstitials, or quietly get the compounding convention wrong — recurring deposits compounded monthly instead of quarterly, income tax computed against last year’s slabs, HRA exemption applying two of the three statutory tests instead of all three.",
+      "The security-level data is worse. Trailing returns are everywhere. Annualised volatility and maximum drawdown — the two numbers that actually describe what holding something feels like — are published for almost no direct mutual-fund plans, because computing them requires several years of daily NAV history and nobody wants to store it.",
+      "And the obvious way to build at this scale is the way that now gets a site removed from the index. Templating 2,300 stock pages that differ only by name and price is textbook scaled-content abuse. So the problem was never “can I generate thousands of pages” — it was whether each page could contain something that exists nowhere else, computed from data I actually hold.",
     ],
     goals: [
       {
-        label: "Product goal",
-        body: "Reduce the cost of asking to near zero — no window switch, no typing, no describing what’s already on screen — without turning the tool into something that does the work for you.",
+        label: "Correctness goal",
+        body: "No number on the site may be wrong, and no number may be invented. Where a value cannot be sourced, the page shows fewer facts rather than a plausible guess. Two consequences I held to: P/B ratio and dividend yield were left off stock pages entirely because there is no feed for them, and every metric function returns null rather than NaN so a missing input renders as “N/A” instead of as a number.",
       },
       {
-        label: "Success criteria",
-        body: "Because “does it teach?” isn’t directly observable, I defined three proxies and instrumented for them:",
+        label: "Differentiation goal",
+        body: "Every programmatic page must pass one test before it ships:",
         items: [
-          "Follow-up rate — a user who asks a second, better question was taught something. A user who takes the first answer and leaves probably wasn’t.",
-          "Average query length — questions getting longer over time suggests the user is engaging with the reasoning, not just requesting output.",
-          "Response gap — how long between the answer and the next action. Too short suggests copy-paste; some pause suggests reading.",
+          "Does this page contain computed numbers that exist nowhere else on the internet in this combination?",
+          "If the answer is no, the page set does not get built — regardless of how much traffic the keyword has.",
+          "One concept was killed on exactly this test: per-stock brokerage and STT pages. Charges are a function of trade value and broker, not of the stock, so 2,300 pages would have differed only by name.",
         ],
       },
       {
-        label: "",
-        body: "None of these is conclusive alone. Together they say something about whether the loop works.",
+        label: "Operational goal",
+        body: "One person must be able to run this. That ruled out anything requiring a human in the loop — no editorial approval queue, no per-page LLM generation to review, no manual data entry. Everything either computes deterministically or does not exist.",
       },
       {
-        label: "Scope goal",
-        body: "Ship two workflows properly rather than the whole candidate set partially.",
+        label: "Performance goal",
+        body: "No network round-trip for a calculation, and no language model anywhere in the request path. Both are TTFB problems and crawl-budget problems before they are user-experience problems.",
       },
     ],
     architecture: {
+      preface:
+        "Six layers, arranged so that the expensive and failure-prone work happens on a schedule rather than during a request. Nothing a user waits for talks to an external service.",
       layers: [
         {
-          name: "Interaction layer — always-on-top transparent window",
-          body: "An Electron renderer that floats above whatever the user is working in. Transparency and always-on-top aren’t styling choices; they’re the mechanism that eliminates the context switch. If the companion sits in the workspace rather than beside it, there’s nothing to switch to.",
+          name: "Ingestion — five external feeds, on cron",
+          body: "NSE Bhavcopy (the official end-of-day CSV of every listed security), NSE’s equity master list, AMFI’s daily NAV file, Yahoo Finance for intraday and forex, and CoinGecko. Nine cron route handlers, each Bearer-gated on a shared secret, each holding itself to a 45-second time budget and writing through bulkWrite in unordered 500–1,000-operation batches. Every outbound call has an AbortSignal timeout — twelve of them, from 8 seconds for IndexNow to 30 for AMFI — because a hung fetch in a serverless function is billed until it is killed.",
         },
         {
-          name: "Voice input — Groq Whisper",
-          body: "Speech-to-text on the input path, so asking costs a sentence instead of a window change and a paragraph of typing.",
+          name: "Persistence — MongoDB, time series as parallel arrays",
+          body: "Nine Mongoose models. Price and NAV history are not one document per day; they are compact parallel arrays on a single document per entity, capped server-side with $push … $slice: -1300, which is about five years of trading days. That is ~150 MB for 2,400 stocks and ~90 MB for 3,500 funds, versus tens of millions of documents the obvious way. The connection is a singleton cached on globalThis so a warm serverless instance reuses it.",
         },
         {
-          name: "Vision and reasoning — LLaMA 4 Scout",
-          body: "A vision-capable model, so the companion can work from what’s actually on screen rather than from the user’s description of it. This is what makes the voice path viable: “what’s wrong with this?” is only a usable query if the model can see the “this.”",
+          name: "Computation — pure, null-safe, unit-tested",
+          body: "Everything financially load-bearing lives in I/O-free modules: trailing returns on a 248-trading-day year, annualised volatility as the standard deviation of daily returns scaled by √248, maximum drawdown, a SIP backtest against real NAV history, and XIRR. Every function ends in a Number.isFinite check and returns null rather than propagating NaN. Feed parsers are split into a pure parse(text) half and a fetching half so the parsers are testable without a network.",
         },
         {
-          name: "Application shell — Electron, React, TypeScript",
-          body: "Electron for the OS-level window behaviour that a web app cannot do. React and TypeScript for the interface, with types carrying the contract between the audio pipeline, the vision context and the response surface.",
+          name: "Rendering — ISR, tuned per data cadence",
+          body: "Server Components throughout, with revalidation windows matched to how fast the underlying data actually changes: 600 seconds for the home page and market views, 6 hours for index constituents (Bhavcopy is end-of-day), 12 hours for individual stock and fund pages, 24 hours for blog posts and comparisons. generateStaticParams pre-builds the highest-traffic pages; the long tail renders on demand and is then cached.",
         },
         {
-          name: "Instrumentation layer",
-          body: "Event capture for the three KPIs above, feeding the question of where the “teach, don’t do” loop breaks down.",
+          name: "Delivery — CDN cache, deterministic fallbacks",
+          body: "Read APIs set s-maxage with stale-while-revalidate so repeat traffic is absorbed at the edge rather than at the database. Recharts is behind four dynamic imports with ssr:false to keep it out of the initial bundle. Every read endpoint returns the exact shape the client already renders on failure — {a:null,b:null}, or an empty array — so an upstream outage degrades to “N/A” in a table instead of a 500.",
+        },
+        {
+          name: "Operations — the deploy is the gate",
+          body: "The Vercel build command is `npm run test:deploy && npm run build`. There is no separate CI step to ignore and no badge to go stale: if the suite fails, there is no deployment. Index-gating logic decides per page whether it is worth indexing at all, and the same predicate filters the sitemap, so the two can never disagree.",
         },
       ],
       footnote:
-        "The system architecture behind this sits in the project’s own PRD, which I authored alongside the user stories and acceptance criteria. This is the layer view.",
+        "The design rationale for the programmatic page sets, including the sets I decided against, is written up in the repository as a scaling blueprint rather than living in my head. Same for the hardening pass — 14 numbered findings, each with the failure it closed and the test that pins it.",
       flow: [
-        { label: "Voice input", detail: "ask by speaking" },
-        { label: "Groq Whisper", detail: "speech-to-text on the input path" },
-        { label: "On-screen context", detail: "what’s actually on screen" },
-        { label: "LLaMA 4 Scout", detail: "vision and reasoning" },
-        { label: "Response surface", detail: "teach, don’t do" },
+        { label: "5 external feeds", detail: "NSE Bhavcopy, AMFI, Yahoo, CoinGecko" },
+        { label: "Cron ETL", detail: "bearer-gated, 45s budget, unordered bulkWrite" },
+        { label: "MongoDB", detail: "parallel arrays, capped at ~1,300 points" },
+        { label: "Pure metric layer", detail: "unit-tested, returns null not NaN" },
+        { label: "ISR", detail: "600s to 24h, matched to data cadence" },
+        { label: "Edge CDN", detail: "s-maxage + stale-while-revalidate" },
       ],
     },
     features: {
-      columns: ["Feature", "What it does", "Why it survived RICE"],
+      columns: ["Feature", "What it does", "Why it is built this way"],
       rows: [
         {
-          feature: "Voice-first query",
-          what: "Ask by speaking; Groq Whisper transcribes",
-          why: "Removes the largest cost in the loop — typing a description of something visible",
+          feature: "27 financial calculators",
+          what: "SIP, EMI, income tax under both regimes, PPF, NPS, GST, HRA, gratuity, EPF, FIRE, SWP and more — recomputing live as sliders move",
+          why: "All client-side state, so there is no network round-trip per keystroke and no server cost per calculation",
         },
         {
-          feature: "Screen-aware context",
-          what: "LLaMA 4 Scout reasons over what’s on screen",
-          why: "Makes short spoken queries sufficient; without vision, voice input is useless",
+          feature: "Per-fund SIP backtest",
+          what: "Buys at the first available NAV of each calendar month from real AMFI history and solves XIRR on the resulting cash flows",
+          why: "The site’s most defensible asset — a real backtest, not a formula projection. Five refuse-to-answer gates run before it computes anything",
         },
         {
-          feature: "Transparent always-on-top window",
-          what: "Companion floats over the active workspace",
-          why: "The context switch is the problem; this is the mechanism that removes it",
+          feature: "Volatility and drawdown per security",
+          what: "Annualised volatility (σ × √248) and maximum peak-to-trough drawdown, computed from stored daily history",
+          why: "Almost nobody publishes these for direct plans. They are the numbers that make each page unique, which is what makes the page set defensible",
         },
         {
-          feature: "“Teach, don’t do” response shaping",
-          what: "Responses guide rather than complete",
-          why: "The differentiating principle of the product",
+          feature: "Head-to-head comparison",
+          what: "Any two stocks or funds, with a ₹10,000-growth overlay, a risk table and a data-derived verdict",
+          why: "Reversed slugs canonicalise to one sorted URL, so a-vs-b and b-vs-a never compete as duplicates in the index",
         },
         {
-          feature: "Behavioural instrumentation",
-          what: "Follow-up rate, query length, response gap",
-          why: "Without it, there’s no way to know if the principle is working",
+          feature: "Deterministic verdict prose",
+          what: "Every sentence of every generated assessment is computed from that page’s own figures",
+          why: "Zero hallucination risk, zero per-page model cost, no approval queue — and no generic filler that would be identical across thousands of pages",
+        },
+        {
+          feature: "Embeddable calculators",
+          what: "Any of the 27 as a one-line iframe carrying a “Powered by MoneyDock” attribution link",
+          why: "The only link source that scales without outreach. Embed routes are noindex and get frame-ancestors * while every other route is locked to SAMEORIGIN",
+        },
+        {
+          feature: "Bilingual evergreen content",
+          what: "English and Hindi post pairs, linked by hreflang, drawn from a finite 45-topic library",
+          why: "The library is finite on purpose — when every topic is covered the job publishes nothing rather than inventing filler",
         },
       ],
     },
     decisions: {
+      preface:
+        "The six calls below are the ones I would want to be questioned on. Two of them reversed an earlier decision of my own, which is the part I would rather talk about than the architecture diagram.",
       items: [
         {
-          title: "Voice-first over a chat window.",
-          body: "The obvious build is a chat box. I chose voice, and it was the decision the whole product hinged on. A chat window reintroduces exactly what CuteHelper exists to remove: you stop, you focus somewhere else, you type. Voice keeps the user’s hands and eyes where the work is. The cost is real — transcription latency, accuracy on technical vocabulary, and the fact that voice is socially awkward in shared spaces. I took those costs because the alternative solved nothing.",
+          title: "One CSV instead of 2,300 API calls.",
+          body: "Pricing the NSE universe symbol-by-symbol through Yahoo got rate-limited, so most stock pages carried stale or missing prices — and a stock page with no price is worthless. NSE publishes an official end-of-day Bhavcopy: one CSV with the closing price of every listed security. Switching to it replaced roughly 2,300 per-symbol requests with a single one. The tradeoff is that the single request becomes load-bearing, so it is defended four ways: dual-host retry across two NSE archive domains, a 15-second timeout, a browser User-Agent and Referer because NSE rejects non-browser agents, a sanity floor that treats a CSV under 100 rows as failure rather than as data, and a ten-day backward walk so weekends and market holidays resolve without intervention.",
         },
         {
-          title: "Vision model over user-supplied context.",
-          body: "Voice input only works if the query can be short. “Why is this failing?” is a two-second question and a two-paragraph typing job — the difference is whether the model can see the screen. Choosing a vision-capable model made the voice decision viable instead of merely novel.",
+          title: "Removing the language model from the request path.",
+          body: "The comparison pages originally called Gemini synchronously on the first visit to any new pair. It worked, and it was wrong: multi-second TTFB, a crawl-budget sink, and a request that could hang until the platform killed it into a raw error page. I rebuilt it as a two-speed page. The most recent 500 pairs are pre-built; everything else renders instantly from a deterministic fallback computed from stored figures, marked noindex-but-follow so a thinner version never enters the index yet still passes link equity, and upgraded later by a cron job. When I later built fund comparisons, they never had a model in the request path at all — that is the lesson already learned, applied without having to relearn it.",
         },
         {
-          title: "Electron over a web app.",
-          body: "Transparent, always-on-top, present across every application is not something a browser tab can be. Electron’s overhead is well documented and I accepted it, because the window behaviour is the product.",
+          title: "Deterministic prose over generated prose, deliberately against my own plan.",
+          body: "The plan had been to generate fund-comparison verdicts with Gemini. I replaced that with computed sentences from unit-tested functions. Three reasons: no hallucination risk on a page about someone’s money, no per-page inference cost across thousands of pairs, and no approval queue — which matters because I am the only person who could staff one. The constraint that made it work is a rule in the assessment module: a bullet is emitted only when the underlying metric exists, so missing data produces fewer bullets, never invented ones.",
         },
         {
-          title: "RICE before writing any code.",
-          body: "I scored the candidate feature set and cut to two workflows. The value wasn’t the ranking — it was having a defensible reason to say no to features I wanted to build. Scoring first meant the scope argument happened before implementation instead of halfway through it.",
+          title: "Fail-open for indexing, fail-closed for authentication.",
+          body: "The same codebase makes opposite choices about ambiguity, and the direction is chosen by blast radius. The index gate defaults to indexable — anything undefined, NaN, or the wrong type is treated as “index it”, because wrongly hiding a page that is earning impressions costs more than wrongly indexing a thin one. The admin auth module defaults to locked — if the password variable is not configured, no request is ever treated as admin, so a misconfiguration leaves the endpoints shut rather than silently open. It also bails on length before comparing bytes, so a wrong password cannot be discovered one character at a time through response timing.",
         },
         {
-          title: "Instrumenting a principle, not just usage.",
-          body: "Most analytics tell you whether people used the thing. I needed to know whether the thing taught them anything, which isn’t directly measurable. Defining three imperfect proxies and being explicit that they’re proxies was a deliberate choice over picking one metric and pretending it was the truth.",
+          title: "Time series as capped parallel arrays.",
+          body: "Five years of daily closes for 2,400 stocks is roughly three million rows the obvious way. Storing them as parallel arrays on one document per entity and capping with $slice: -1300 keeps it at about 150 MB, and reading one entity’s full history is a single document fetch instead of a range scan. The cost is that arbitrary cross-entity queries over history become awkward — I accepted that, because the product never needs one. The chart endpoints then project only the fields they use, which halved the bytes read per request when I noticed the high and low arrays were being fetched and discarded.",
+        },
+        {
+          title: "Letting robots.txt allow what Googlebot needs to render.",
+          body: "A blanket disallow on /_next/ looks like sensible hygiene. It meant Googlebot was rendering the site completely unstyled — confirmed by looking at the screenshot in Search Console’s live test, not by reasoning about it. The fix carves /_next/static/ and /_next/image back out, relying on robots.txt longest-match precedence. The same file then explicitly allows seventeen named AI and answer-engine crawlers, on the view that being readable by the systems that increasingly answer these questions is worth more than the traffic it might divert.",
         },
       ],
     },
     challenges: [
       {
-        title: "Specifying a principle precisely enough to build against.",
-        body: "“Teach, don’t do” is a good sentence and a terrible requirement. Turning it into acceptance criteria — what a response may and may not contain — was the hardest writing on the project, and it’s still the part most likely to need revision.",
+        title: "Scaling without triggering the filter designed to catch it.",
+        body: "The March 2026 core update demoted template-with-variable-substitution at scale by 50–90%, and programmatic pages are this site’s entire growth thesis. There was no way to test the boundary safely, so I released in gated batches — 500, then 2,000, then the rest — advancing only when Search Console showed at least 60% of a batch indexed, with a hard stop if “crawled, currently not indexed” passed roughly 40%.",
       },
       {
-        title: "Measuring something that resists measurement.",
-        body: "There is no event that fires when a user learns something. Every metric available is a proxy, and each one has an obvious alternative explanation. Holding three of them together and reasoning about the pattern is a weaker method than I’d like, and I don’t have a better one yet.",
+        title: "XIRR has no closed form, and NAV history has holes.",
+        body: "Schemes change, holidays interrupt, series start mid-life. A silently wrong return figure on a page about someone’s savings is worse than no figure, so the solver bisects net present value over a bounded range for up to 200 iterations and returns null when no sign change exists rather than reporting a bogus root. Five gates run before it: array-length parity, a minimum of two months, sufficient purchase months, every NAV strictly positive, and exact calendar-month contiguity — computing the expected span and refusing if it disagrees with the observed count, so a gappy series cannot quietly misrepresent returns.",
       },
       {
-        title: "Voice as an input surface.",
-        body: "Speech-to-text on technical vocabulary is unreliable in exactly the situations where a student most needs help. It also assumes an environment where speaking aloud is acceptable — which a library is not.",
+        title: "One database blip poisoning the process until redeploy.",
+        body: "The classic serverless singleton bug, and the hardest class to catch because it is invisible in normal operation. The connect promise was cached on globalThis, so a single failed connection during a cold start cached the rejected promise — and every later request on that warm instance replayed the same rejection until the process happened to restart. Every page on the site returning 500, with no error in the request that caused it. Three lines fixed it; what makes it closed rather than patched is a test that pins both halves, asserting the retry happens and that the happy path still connects exactly once, so a future refactor cannot quietly open a connection per request.",
       },
       {
-        title: "Being the only reviewer.",
-        body: "Owning product and engineering means nobody catches a bad spec before it becomes a bad build. On UrbanIQ there were ten other people on the project and three roles’ requirements to reconcile against. Here the only external check is the instrumentation, and that arrives after the fact.",
+        title: "A finance page that must not fabricate.",
+        body: "The temptation on a thin page is always to add a plausible-looking field. I left P/B and dividend yield off stock pages because there is no source for them. Where a stock has no industry classification, the peer heading says “most actively traded stocks” rather than claiming a relationship that does not exist. This is a discipline problem more than an engineering one, and it is the constraint I found hardest to hold.",
+      },
+      {
+        title: "Reading my own metrics correctly.",
+        body: "Mass indexation makes average position look like collapse: new pages enter the index around position 70 and drag the mean down while nothing that was ranking has moved. Pruning genuinely empty pages does the reverse — indexed count dips and average position improves, which looks like a loss and is the intended outcome. Learning to read the two apart took longer than building the pipeline that caused them.",
+      },
+      {
+        title: "Automated content that was actively harmful.",
+        body: "An earlier version of the blog job produced roughly 95 posts of news, IPO updates, stock tips and Hindi duplicates — content stale within days, competing against publications this domain cannot outrank, and dragging the whole site under a scaled-content signal. I audited it, cut about 80 posts, and rewrote the job to draw from a finite library of 45 evergreen topics that self-terminates instead of churning. Deleting most of what an automation I wrote had produced was the correct call and not a comfortable one.",
       },
     ],
     lessons: [
       {
-        title: "Prioritization is only real when it deletes something.",
-        body: "RICE didn’t tell me what to build; it gave me a defensible reason not to build things. That’s the actual output of a prioritization framework, and I’d been treating it as a ranking exercise before this.",
+        title: "Choose fail-open or fail-closed per blast radius, not per codebase.",
+        body: "I used to treat defensive defaults as a single house style. Holding two opposite defaults in one codebase — and being able to say why each one points the way it does — turned out to be a much better way to reason about failure than picking a side.",
       },
       {
-        title: "Interaction model is a product decision, not a design detail.",
-        body: "Voice over chat wasn’t a UI preference — it determined the model choice, the platform choice and the entire value proposition. I now treat interaction model as something that belongs in the PRD, not the design review.",
+        title: "A test suite is worth what it blocks.",
+        body: "The suite grew from 100 to 272 tests, but the change that mattered was putting it in the build command rather than in CI. A green badge is advisory. A build that will not produce a deployment is a constraint, and I stopped having to remember to be careful.",
       },
       {
-        title: "A metric you can’t defend is worse than admitting you can’t measure it.",
-        body: "Picking a single number as a stand-in for “does this teach?” would have looked more rigorous and been less honest. Naming the proxies as proxies keeps the reasoning inspectable.",
+        title: "Lock behaviour before you improve it.",
+        body: "Before the hardening pass I wrote 100 tests against the unmodified source and got them green, so any fix that changed observable behaviour would be visibly wrong rather than arguably fine. It cost a day up front and made the following fourteen fixes boring, which is exactly what you want from a hardening pass.",
       },
       {
-        title: "Building what I spec makes me a worse optimist and a better spec writer.",
-        body: "Every requirement I wrote, I paid for in implementation. That feedback loop is the most useful thing about doing both jobs.",
+        title: "Returning null is a design decision.",
+        body: "Every metric function returning null rather than NaN means the honest answer travels all the way to the page and renders as “N/A”. Once that convention existed, “we don’t have this number” stopped being an error case to suppress and became a normal value the UI knows how to display.",
+      },
+      {
+        title: "Confirm rendering assumptions by looking.",
+        body: "The robots.txt problem was invisible to reasoning and obvious in a screenshot. I now check what a crawler actually receives rather than what the configuration ought to imply — the same instinct as reading the response instead of trusting the client.",
+      },
+      {
+        title: "The best decision on the project was a deletion.",
+        body: "Killing the per-stock brokerage pages, cutting 80 blog posts, and refusing to add two fields I had no source for did more for this site than any feature I shipped. Restraint is not a substitute for engineering, but at programmatic scale it is part of it.",
       },
     ],
     futureImprovements: {
+      preface:
+        "In roughly the order I would take them, and stated plainly rather than as a roadmap. The first three are gaps I would raise myself in an interview.",
       items: [
-        "Get enough usage data on follow-up rate to say something defensible about whether the “teach, don’t do” loop holds. The instrumentation exists; the reading is what’s outstanding.",
-        "Improve transcription reliability on technical vocabulary, which is where voice input fails most often and matters most.",
-        "Add a text input path for environments where speaking isn’t viable, without letting it become the default and undo the core decision.",
-        "Expand beyond the two RICE-selected workflows only once those two show retention, not before.",
-        "Reduce Electron’s memory footprint — an always-on companion that costs the user resources all day is a companion they close.",
+        "No IP or user rate limiting exists. Protection today is structural — CDN caching absorbs repeat traffic, cron routes are Bearer-gated, admin writes are token-gated — but that is not the same thing, and it is the first item I would close.",
+        "There is no end-to-end suite. 272 unit and integration tests cover the maths, the parsers, the API contracts and the component states, but nothing drives a real browser through a calculator and asserts the rendered figure.",
+        "The income tax and Atal Pension calculators use rounded slab offsets and an approximation formula rather than the exact statutory tables. Both are marked as approximations in the source; on a finance site both should be exact.",
+        "One dependency (sharp) is imported by the blog image job but missing from package.json — it resolves only through a transitive copy, which is a build waiting to break.",
+        "Only one of the nine cron jobs currently pings IndexNow on publish. Wiring the rest would cut the lag between a page updating and search engines seeing it.",
+        "The sitemap is a single document. It is fine at ~5,100 URLs and needs sharding before it reaches the 50,000-URL limit; the rationale for deferring it is written down rather than assumed.",
+        "Coverage reporting is not configured, so I know the suite is meaningful by reading it rather than by measuring it.",
       ],
     },
     technologies: {
-      statedLabel: "Named in the résumé for this project",
+      statedLabel: "In the codebase",
       stated: [
-        "Electron",
-        "React",
-        "TypeScript",
-        "Groq Whisper",
-        "LLaMA 4 Scout (vision)",
-        "RICE",
-        "PRD Authoring",
-        "User Stories & Acceptance Criteria",
-        "System Architecture",
+        "Next.js 16 (App Router)",
+        "React 19",
+        "TypeScript (strict)",
+        "MongoDB",
+        "Mongoose",
+        "Tailwind CSS",
+        "Vitest",
+        "Testing Library",
+        "Recharts",
+        "AWS S3",
+        "Vercel",
+        "Google Gemini",
+        "ISR",
+        "JSON-LD structured data",
       ],
-      impliedLabel: "Strongly implied by the work described",
+      impliedLabel: "Engineering practices the build depends on",
       implied: [
-        "LLM Integration",
-        "Prompt Engineering",
-        "Voice Interfaces",
-        "Context-Aware Systems",
-        "KPI Definition",
+        "Time-series modelling",
+        "ETL pipeline design",
+        "Financial mathematics",
+        "XIRR / numerical methods",
+        "Caching strategy",
+        "Programmatic SEO",
+        "Test-gated deployment",
+        "Failure-mode analysis",
       ],
     },
-    links: [{ label: "Open the live product", unavailable: unavailable.notPublic }],
+    links: [
+      { label: "Open the live product", href: "https://moneydock.in" },
+      { label: "View the code", unavailable: unavailable.privateRepo },
+    ],
     mediaPlaceholder: emptyStates.mediaSlot,
   },
 
   /* ======================================================================== */
   {
-    slug: "urbaniq",
-    name: "UrbanIQ",
-    status: "Delivered",
-    role: "Product Manager",
-    kind: "Institutional Complaint & Document Management Platform",
-    period: "Jan 2024 — Dec 2024",
-    metaTitle: "UrbanIQ — AI-assisted complaint platform",
+    slug: "animatrixx",
+    name: "Animatrixx",
+    status: "Live",
+    role: "Solo engineer — backend, infrastructure, frontend",
+    kind: "Anime & Manga Platform · Self-hosted Infrastructure",
+    period: "Aug 2024 — Present",
+    metaTitle: "Animatrixx — an anime and manga platform on nine self-hosted services",
     cardBlurb:
-      "Led a 10-person team building an AI-assisted complaint and document management platform. 4,000+ submissions processed in live use, three user roles reconciled, resolution time cut 30% in load testing.",
+      "An anime streaming and manga reading platform, and the nine-container stack behind it: Django under uWSGI behind nginx, Celery on RabbitMQ, Redis, MariaDB, Elasticsearch, and a Prometheus/Grafana/Loki observability layer — self-hosted rather than rented.",
     rationale:
-      "Ten people, three roles, 4,000+ real submissions, measured outcomes. The strongest evidence of product rigour.",
+      "The project where I own the infrastructure rather than a platform’s abstraction of it. Nine orchestrated services, an ingestion pipeline against two undocumented rate limits, and a metrics and logging plane I built because nobody was going to hand me one.",
     metrics: [
-      { value: "4,000+", label: "submissions processed in live use" },
-      { value: "30%", label: "resolution-time reduction in load testing" },
-      { value: "10", label: "person team led" },
-      { value: "3", label: "user roles reconciled into 15+ prioritized stories" },
+      { value: "9", label: "orchestrated services, one bridge network" },
+      { value: "4", label: "data stores — MariaDB, Redis, Elasticsearch, S3" },
+      { value: "33", label: "API operations across 21 URL patterns" },
+      { value: "4", label: "differentiated retry strategies in the ingest path" },
     ],
     overview: [
-      "UrbanIQ is an AI-assisted complaint and document management platform for institutional workflows. I was the Product Manager on a team of ten, and I owned the roadmap from PRD through deployment.",
-      "It went into live use and processed 4,000+ real submissions. That number is the reason this project matters more than anything else I’ve built: the specs were tested by actual people with actual complaints, and afterwards there was enough data to find out where the specs were wrong.",
+      "Animatrixx is an anime streaming and manga reading platform. The manga side is fully operational: a catalogue ingested from MangaDex with cover and banner art reconciled from AniList, debounced full-text search backed by Elasticsearch, tag filtering, threaded comments, a per-user recency rail and trending and popular rankings, and a fullscreen reader with vertical-scroll and page modes, keyboard shortcuts and auto-hiding chrome. The anime side ships the complete viewing interface — player controls, quality and playback-speed selection, seek and volume with mute interlock, episode navigation and YouTube-style keybindings — with the streaming backend as the current build phase rather than a finished layer.",
+      "The reason this project earns a case study is the half users never see. It runs on nine containers I orchestrate and administer: Django 5 under uWSGI behind nginx, MariaDB, Redis, RabbitMQ, Celery worker and beat, Elasticsearch, and a Prometheus, Grafana, Loki and Promtail observability stack scraping application metrics every four seconds and shipping structured logs off the box.",
+      "I chose to self-host all of it. A managed platform would have been faster and I would have learned considerably less — most of what is written below is a consequence of having to run the thing rather than deploy it.",
     ],
     problem: [
-      "Institutional complaint and document handling puts three roles — requester, handler and administrator — on the same process with different requirements of it. Each one needs something the others don’t, and each one’s needs constrain the others’.",
-      "That is what makes it a product problem rather than a software problem. Building three tools is easy; building one system whose data means the same thing to all three is not. Routing, resolution time and departmental SLA performance all depend on getting that reconciliation right first.",
+      "Manga sources do not want to be aggregated. MangaDex serves page images from ephemeral, hotlink-protected nodes: there are no stable URLs, you must call an allocator to be assigned a node and compose URLs yourself from a returned hash and filename list, and those nodes reject any request whose Referer is not mangadex.org. A correctly-composed URL still returns 403 from a browser on another domain.",
+      "The metadata is split across two sources with no shared identifier. MangaDex has complete chapter data and poor cover art; AniList has excellent cover and banner art and no chapter pages. There is no ISBN, no cross-reference — the only available join is the title, and MangaDex titles arrive as a language-keyed dictionary full of romanisation noise, punctuation and season markers that AniList’s search will not match.",
+      "Both APIs rate-limit on separate, undocumented budgets, and a catalogue crawl makes thousands of sequential calls. A naive loop dies partway and leaves the database half-populated; a naive retry storm gets the address banned. And the ranking features users expect — continue reading, trending, popular — are ranked lists that change on every page view, which is a GROUP BY over a view-events table on every homepage load if you build them the obvious way.",
     ],
     goals: [
       {
-        label: "Product goal",
-        body: "One system where all three roles get what they need from the same data, submissions route themselves, and the bottlenecks become visible.",
+        label: "Infrastructure goal",
+        body: "Run the whole system myself, on servers I administer, with enough observability to diagnose a problem from metrics and logs rather than by guessing. Concretely: application metrics scraped on a short interval, structured logs shipped off the host, and a dashboard I can open before I open a shell.",
       },
       {
-        label: "Definition of done — the actual hard part",
-        body: "Reconcile three roles’ requirements — requester, handler, administrator — into one prioritized backlog with acceptance criteria precise enough to build against.",
-      },
-      {
-        label: "Measurable targets",
+        label: "Ingestion goal",
+        body: "A crawl that survives contact with two hostile rate limits:",
         items: [
-          "Reduce time from submission to resolution.",
-          "Route submissions without manual triage.",
-          "Make SLA performance visible by department.",
+          "Never abort the whole run for a single failed item — degrade to skipping that item.",
+          "Differentiate the retry strategy by failure class, rather than retrying everything identically.",
+          "Stay under the sustained-rate radar deliberately, with jitter, instead of going as fast as possible and reacting to bans.",
+          "Make re-runs idempotent, so an interrupted crawl can simply be run again.",
         ],
       },
-    ],
-    architecture: {
-      layers: [
-        {
-          name: "Role-based access across three user types",
-          body: "Requester, handler and administrator each see a different product built on the same underlying records. Getting this right at the data layer was what allowed a single system to serve three conflicting sets of expectations.",
-        },
-        {
-          name: "AI-based classification on ingest",
-          body: "Incoming submissions are classified by content and auto-routed to the correct handler queue, replacing manual triage. This is the piece that removed the manual step at the front of the process.",
-        },
-        {
-          name: "Approval workflow",
-          body: "A staged approval path through handlers and administrators. The order of these stages turned out to be the single highest-leverage variable in the whole system — see Technical Decisions.",
-        },
-        {
-          name: "Analytics layer",
-          body: "Python and pandas for exploratory analysis, Metabase for the dashboards that made SLA breach patterns visible by department.",
-        },
-      ],
-      flow: [
-        { label: "Submission", detail: "requester" },
-        { label: "AI classification", detail: "on ingest" },
-        { label: "Handler queue", detail: "auto-routed" },
-        { label: "Staged approval", detail: "through handlers and administrators" },
-        { label: "SLA analytics", detail: "by department" },
-      ],
-    },
-    features: {
-      columns: ["Feature", "What it does", "Impact"],
-      rows: [
-        {
-          feature: "AI complaint classification",
-          what: "Reads submission content and auto-routes to the right queue",
-          why: "Removed the manual triage step at the front of the process",
-        },
-        {
-          feature: "Three role-based experiences",
-          what: "Requester, handler and administrator views over shared records",
-          why: "One system instead of three, with 15+ user stories reconciling the conflicts",
-        },
-        {
-          feature: "Staged approval workflow",
-          what: "Structured path from submission to resolution",
-          why: "Reordering these stages cut resolution time 30% in load testing",
-        },
-        {
-          feature: "Document management",
-          what: "Institutional document requests handled in the same pipeline as complaints",
-          why: "One platform covering both, rather than a complaint tool and a document tool",
-        },
-        {
-          feature: "SLA analytics by department",
-          what: "Metabase dashboards over 4,000+ submissions",
-          why: "Surfaced breach clustering nobody had predicted, which changed prioritization",
-        },
-      ],
-    },
-    decisions: {
-      items: [
-        {
-          title: "Reordering the approval workflow instead of optimising each stage.",
-          body: "The instinct with a slow process is to make each step faster. The EDA said the delay wasn’t in any single stage — it was in the sequence, where work waited for an approval that didn’t need to come first. Reordering the stages cut resolution time 30% in load testing. It’s the best return I’ve gotten from a change that added no features at all.",
-        },
-        {
-          title: "AI classification over a routing rules engine.",
-          body: "Rules would have been more predictable and easier to debug. But a rules engine over free-text complaints becomes a keyword list that fails on anything phrased unexpectedly — which is a lot of real complaints. Classification handled the variance. The cost was accepting probabilistic routing in a workflow where being wrong has a human on the other end, so misroutes had to be recoverable by design rather than prevented.",
-        },
-        {
-          title: "One system with role-based views over three separate tools.",
-          body: "Three tools would have shipped faster and each role would have gotten exactly what it asked for. But the administrator’s throughput view is only meaningful if it’s reading the same records the handler is closing. Splitting the system would have split the truth.",
-        },
-        {
-          title: "Reconciling all three roles before writing any stories.",
-          body: "I could have written each role’s stories in that role’s own language and discovered the contradictions during QA. Instead I reconciled the requirements across all three roles first, which is why the 15+ prioritized user stories carried acceptance criteria precise enough to build against. It was slow, and it was the highest-value work on the project.",
-        },
-        {
-          title: "Running EDA after launch and letting it change the roadmap.",
-          body: "The analysis on 4,000+ submissions wasn’t a report for stakeholders — it fed back into prioritization. SLA breaches clustered by department in ways the original roadmap hadn’t anticipated, and the roadmap changed.",
-        },
-      ],
-    },
-    challenges: [
       {
-        title: "Three roles, one set of acceptance criteria.",
-        body: "Requester, handler and administrator each come at the same process from a different position, and each has a different reason to care about it. Reconciling those three sets of requirements into 15+ prioritized user stories with acceptance criteria was the central product problem — the software was comparatively easy afterwards.",
-      },
-      {
-        title: "Coordinating ten people as a student.",
-        body: "Leading a 10-person student build is not the same as managing a team — alignment has to come from written specs clear enough to be self-executing, because nothing else is enforcing it. That is the main reason my PRDs and acceptance criteria got sharp.",
-      },
-      {
-        title: "Probabilistic routing in a process with real consequences.",
-        body: "AI classification will misroute. When the misrouted thing is somebody’s complaint, “the classifier is usually right” is not a defence. Designing for recoverable misroutes rather than trying to eliminate them was the necessary reframe.",
-      },
-      {
-        title: "Measuring an improvement I couldn’t measure in production.",
-        body: "The 30% resolution-time reduction was measured in load testing. Load testing isn’t live behaviour, and I state it that way every time. Being able to say what a number does and doesn’t cover is part of the number.",
-      },
-    ],
-    lessons: [
-      {
-        title: "The hardest part of product is definitional, not technical.",
-        body: "Ten people, three roles, one working platform — and the bottleneck was never engineering. It was getting agreement on what a word meant. I now treat “do all stakeholders mean the same thing by this?” as the first question on any spec.",
-      },
-      {
-        title: "Sequence beats speed.",
-        body: "A 30% reduction in load testing came from reordering stages, not from making anything faster. Look at the shape of a process before optimising its parts.",
-      },
-      {
-        title: "Written specs are the instrument, not the artefact.",
-        body: "On a 10-person student build, the only reliable instrument is a document precise enough that nobody needs to ask what it meant. Writing to that standard made me better at the job than any amount of coordinating in meetings would have.",
-      },
-      {
-        title: "Post-launch analysis is part of the product, not a report about it.",
-        body: "Running EDA on 4,000+ submissions and changing the roadmap because of it is the loop that makes prioritization honest. Without it, prioritization is just confident guessing.",
-      },
-      {
-        title: "Qualify your numbers or lose the room.",
-        body: "“Cut resolution time 30% in load testing” is a weaker sentence than “cut resolution time 30%” and a far stronger position to defend. The qualifier is what makes the claim worth something.",
-      },
-    ],
-    futureImprovements: {
-      items: [
-        "Measure the resolution-time improvement in production rather than load testing, and publish the difference between the two.",
-        "Track classification accuracy over time and build an explicit correction loop so misroutes retrain routing rather than just getting fixed.",
-        "Give requesters proactive status updates instead of a page they have to check — most of the requester’s frustration was informational, not procedural.",
-        "Turn the department-level SLA findings into alerting rather than a dashboard someone has to open.",
-        "Revisit the approval sequence with production data now that the load-test finding is known to matter.",
-      ],
-    },
-    technologies: {
-      statedLabel: "Named in the résumé for this project",
-      stated: [
-        "Python (pandas)",
-        "Metabase",
-        "AI Classification",
-        "Exploratory Data Analysis",
-        "PRD Authoring",
-        "User Stories & Acceptance Criteria",
-        "Roadmapping",
-      ],
-      impliedLabel: "In the global skills list, not attributed to UrbanIQ",
-      implied: [
-        "KPI Definition",
-        "Agile & Scrum",
-        "Jira",
-        "Jupyter",
-        "NumPy",
-        "matplotlib",
-      ],
-    },
-    links: [{ label: "Open the live product", unavailable: unavailable.notPublic }],
-    mediaPlaceholder: emptyStates.mediaSlot,
-  },
-
-  /* ======================================================================== */
-  {
-    slug: "servicehub",
-    name: "ServiceHub Private Limited",
-    status: "Delivered",
-    role: "Freelance Product Developer",
-    kind: "Services Marketplace",
-    period: "2026 — Present",
-    metaTitle: "ServiceHub — Two-sided services marketplace",
-    cardBlurb:
-      "Sole developer on a paid engagement. Requirements elicited from the client, MVP scoped against a fixed budget, one role-based application serving two distinct experiences plus an admin panel.",
-    rationale: "Paid client work. Almost no student has this.",
-    metrics: [{ value: "1", label: "paying client" }],
-    overview: [
-      "ServiceHub is an on-demand marketplace connecting customers with local service providers. It was a paid client engagement and I was the sole developer — requirements, architecture, build, deployment and handover.",
-      "The distinctive thing about it isn’t the product; it’s the constraint. A fixed budget and a fixed timeline with one developer means every scope conversation is a trade-off conversation, and I was the one having them, directly with the client.",
-    ],
-    problem: [
-      "The client needed a working two-sided marketplace: customers finding and booking local service providers, providers managing what came in. And they needed the operational tooling to actually run it, which is the part that tends to get discovered late.",
-      "The constraint was the real problem. Fixed budget, fixed timeline, one developer. Under those conditions the failure mode isn’t building the wrong thing — it’s agreeing to build all of it.",
-    ],
-    goals: [
-      {
-        label: "Product goal",
-        body: "A marketplace serving both sides, deployed and handed over, plus an admin panel that lets the client operate it without a developer.",
-      },
-      {
-        label: "Delivery goal",
-        body: "An MVP that ships inside the budget and the timeline, with the trade-offs agreed explicitly rather than absorbed silently.",
-      },
-      {
-        label: "Handover goal",
-        body: "The client owns a running system at the end, not a dependency on me.",
-      },
-    ],
-    architecture: {
-      layers: [
-        {
-          name: "One role-based application, two experiences",
-          body: "Rather than two codebases, a single application where role determines the product a user gets — customer or service provider. Shared authentication, shared data model, divergent interfaces.",
-        },
-        {
-          name: "Separate admin panel",
-          body: "Operations deliberately live outside the marketplace application. Admin users have a different job, a different risk profile and a different release cadence than either side of the marketplace, and coupling them would have made every operational change a marketplace deployment.",
-        },
-        {
-          name: "Data and backend layer",
-          body: "REST APIs between the application and its services.",
-        },
-        {
-          name: "Frontend",
-          body: "A React application.",
-        },
-      ],
-      flow: [
-        { label: "Shared authentication", detail: "shared data model" },
-        { label: "Role-based routing", detail: "customer or service provider" },
-        { label: "Customer marketplace", detail: "find and book" },
-        { label: "Provider experience", detail: "manage incoming work" },
-        { label: "Admin panel", detail: "outside the marketplace application" },
-      ],
-    },
-    features: {
-      columns: ["Feature", "What it does", "Why it was in the MVP"],
-      rows: [
-        {
-          feature: "Customer marketplace",
-          what: "Find and book local service providers",
-          why: "Half the two-sided market — without it there’s no product",
-        },
-        {
-          feature: "Provider experience",
-          what: "Providers manage incoming work",
-          why: "The other half; a marketplace with one side is a directory",
-        },
-        {
-          feature: "Role-based authentication",
-          what: "One auth system routes users to their experience",
-          why: "The architectural decision that made one codebase viable for two products",
-        },
-        {
-          feature: "Admin operations panel",
-          what: "Client runs day-to-day operations independently",
-          why: "Surfaced in requirements elicitation; without it the client needs a developer forever",
-        },
-        {
-          feature: "Deployment & handover",
-          what: "Client owns a running system",
-          why: "The engagement isn’t delivered until this is true",
-        },
-      ],
-    },
-    decisions: {
-      items: [
-        {
-          title: "One role-based application instead of two parallel apps.",
-          body: "Two apps would have been cleaner in isolation and twice the maintenance surface — and I was the entire maintenance team. Role-based routing over shared auth and a shared data model meant one deployment path, one set of dependencies, one place to fix a bug. I could make that call confidently precisely because I was the person who’d pay for the wrong one.",
-        },
-        {
-          title: "Admin panel separate, everything else together.",
-          body: "The consistent-sounding decision would have been to put admin behind another role in the same app. I split it, because operations and marketplace change for unrelated reasons at unrelated times. Coupling them would have meant redeploying the customer-facing product to change an internal workflow. The rule I was applying: share what shares a reason to change.",
-        },
-        {
-          title: "Elicit requirements directly rather than work from the brief.",
-          body: "I ran the requirements conversation with the client myself rather than working from a feature list. That’s where the operational needs surfaced — the separate admin panel is the piece that determines whether the client can run the business after handover, and it comes out of asking what has to happen daily rather than what the product should have.",
-        },
-        {
-          title: "Negotiate trade-offs in the open.",
-          body: "With a fixed budget, every added feature removes another one. I put those exchanges to the client explicitly rather than quietly absorbing scope and hoping the timeline held. Uncomfortable conversations early instead of silent scope creep later.",
-        },
-        {
-          title: "Managed infrastructure over a hand-rolled backend.",
-          body: "One developer against a fixed timeline. Managed data infrastructure and a typed ORM buy time that goes into product surface instead of plumbing. The trade-off is platform coupling, which is the right trade at this scale and the wrong one at a much larger one.",
-        },
-      ],
-    },
-    challenges: [
-      {
-        title: "Being every role at once.",
-        body: "Product manager, architect, engineer, deployer and account manager, with no one to check any of it. The mitigation was writing decisions down before implementing them — if a choice couldn’t survive being written as a sentence, it usually wasn’t a good choice.",
-      },
-      {
-        title: "Fixed budget as a design constraint.",
-        body: "Budget wasn’t a project-management detail; it decided architecture. One codebase over two, managed services over custom infrastructure, both sides of the marketplace shipped properly over a wider surface shipped partially. Every one of those is a budget decision wearing technical clothes.",
-      },
-      {
-        title: "A client who knows the business, not the software.",
-        body: "A client buying software knows their business, not what a feature costs to build. Translating “can we also do X” into “X costs roughly this much of Y” — in terms they could make a call on — was most of the value I added before writing any code.",
-      },
-      {
-        title: "Delivering to a client means someone else’s business depends on it.",
-        body: "A personal project failing is a bad evening. This failing is a client’s operations. That changed how I thought about the admin panel, error paths and handover documentation.",
-      },
-    ],
-    lessons: [
-      {
-        title: "Requirements elicitation is where the product gets found.",
-        body: "The separate admin panel — arguably the most important deliverable for the client’s ability to operate after handover — came out of asking what has to happen daily, not out of a feature discussion. I now treat any feature list as a starting hypothesis rather than a specification.",
-      },
-      {
-        title: "Architecture is a budget document.",
-        body: "“One role-based app or two?” is a technical question with a financial answer. Being the person who pays for the decision makes you decide differently, and better.",
-      },
-      {
-        title: "Say the trade-off out loud.",
-        body: "Every added feature removes another one when the budget is fixed. Putting that exchange to the client explicitly, rather than absorbing it quietly, is the difference between a scoped MVP and an open-ended build. Absorbing scope silently is the most common way solo delivery fails.",
-      },
-      {
-        title: "Split by reason to change, not by resemblance.",
-        body: "Admin looks like it belongs in the app and doesn’t belong in its deployment cycle. Coupling by similarity is a trap; coupling by shared cause of change is the actual rule.",
-      },
-      {
-        title: "Handover is a feature.",
-        body: "The engagement wasn’t finished when the code worked. It was finished when the client could run the thing without me.",
-      },
-    ],
-    futureImprovements: {
-      items: [
-        "Instrument the two-sided funnel — booking completion by side — so scope conversations after MVP are driven by data instead of intuition.",
-        "Extend the admin panel from operations into reporting, so the client can answer their own business questions.",
-        "Add provider-side analytics; providers currently manage work without visibility into their own performance.",
-        "Formalise the handover with runbook documentation, so operational knowledge doesn’t live in my head.",
-        "Revisit the single-application decision if provider requirements diverge much further from customer requirements.",
-      ],
-    },
-    technologies: {
-      statedLabel: "Confirmed from the résumé",
-      stated: [
-        "Requirements Elicitation",
-        "MVP Definition",
-        "Stakeholder & Client Management",
-        "System Architecture",
-        "Role-Based Application Design",
-      ],
-      impliedLabel: "In the global skills list, not attributed to ServiceHub",
-      implied: ["React", "Next.js", "TypeScript", "Supabase", "Prisma", "REST APIs", "Git"],
-    },
-    links: [
-      { label: "Open the live product", unavailable: unavailable.clientRestricted },
-    ],
-    mediaPlaceholder: emptyStates.mediaSlot,
-  },
-
-  /* ======================================================================== */
-  {
-    slug: "docmize",
-    name: "Docmize",
-    status: "In progress",
-    role: "Software Developer Intern",
-    kind: "AI Hospital Management System",
-    period: "2026 — Present",
-    metaTitle: "Docmize — AI hospital management system",
-    cardBlurb:
-      "Frontend interfaces and dashboards for an AI-integrated hospital management system covering appointments and patient workflows, built inside an existing team and codebase.",
-    rationale:
-      "Team context — proves he works inside someone else’s codebase, not only greenfield.",
-    metrics: [],
-    overview: [
-      "At Docmize I build frontend interfaces and dashboards for an AI-integrated hospital management system covering appointments and patient workflows. It’s the one project on this page where I didn’t choose the architecture, and that’s exactly what makes it valuable to me.",
-      "Everything else here I specced and built myself. This is the environment where I have to translate product requirements into someone else’s codebase, coordinating with backend and design, and it has made me a better spec writer than any project where I got my own way.",
-    ],
-    problem: [
-      "Hospital software has a density problem. A lot of information, several roles, clinical consequences for a confusing screen, and users who are mid-task and not in a position to explore an interface.",
-      "Appointments and patient workflows are where that density concentrates. The engineering problem is making dense information legible; the product problem is deciding what a given role needs on screen and what is noise to them.",
-    ],
-    goals: [
-      {
-        label: "Product goal",
-        body: "Interfaces and dashboards for appointments and patient workflows where the AI-assisted parts are legible to the person using them — not opaque suggestions on a busy screen.",
-      },
-      {
-        label: "Engineering goal",
-        body: "Translate product requirements into modular, scalable healthcare workflows that fit the existing architecture rather than working around it.",
-      },
-      {
-        label: "Collaboration goal",
-        body: "Coordinate with backend and design so the frontend is a shared contract, not a set of assumptions.",
+        label: "Read-path goal",
+        body: "Keep ranked, personalised lists off the relational database. No aggregate query on the homepage request path, and no analytics write blocking a user’s page load.",
       },
     ],
     architecture: {
       preface:
-        "This is a team codebase and the architecture predates me, so what follows is my layer rather than the system.",
+        "Nine containers on one bridge network, plus a Next.js frontend deployed separately. The shape below is the production composition; the observability plane is drawn detached because it observes the system rather than serving it.",
       layers: [
         {
-          name: "Frontend layer",
-          body: "Interfaces and dashboards for appointments and patient workflows, built as modular components so healthcare workflows can be composed and extended rather than rebuilt per screen.",
+          name: "Edge — nginx",
+          body: "nginx (unprivileged, alpine) terminates the request, serves collected static assets straight from a shared volume so they never touch an application worker, and forwards everything else to Django over the uwsgi protocol rather than HTTP.",
         },
         {
-          name: "AI-assisted experience layer",
-          body: "Product requirements for AI-assisted features translated into user-facing flows — the work being to make the AI legible and interruptible in a clinical context, not just present.",
+          name: "Application — Django 5 and DRF under uWSGI",
+          body: "Django 5.0.3 with Django REST Framework, running under uWSGI in master mode with threads enabled. Token authentication, page-number pagination, eleven ordered middleware, and nested routers from drf-nested-routers so chapters and comments are properly parented under a manga rather than filtered by query parameter. Three stacked auth backends, including a custom one that accepts either a username or an email in the same field.",
         },
         {
-          name: "Integration surface",
-          body: "The contract with backend services, agreed with the backend team rather than inferred from response shapes.",
+          name: "State — MariaDB, Redis, Elasticsearch, S3",
+          body: "MariaDB holds the relational truth: seven models across four apps, with the manga-to-tag many-to-many, self-referential threaded comments, and a per-user reading-history row constrained unique on user and manga. Redis serves double duty — a django-redis cache for the non-personalised rails, and a separate raw client holding sorted sets and lists for rankings. Elasticsearch mirrors the searchable fields as a read replica so full-text queries never reach MariaDB. S3 in ap-south-1 holds site assets.",
+        },
+        {
+          name: "Asynchronous work — Celery on RabbitMQ",
+          body: "A Celery worker and a beat scheduler, brokered over AMQP with results persisted back to MariaDB. View tracking is fired from the detail endpoint with delay() so a user’s page load never waits on analytics writes; welcome emails render an HTML template with a plain-text alternative and go out through SMTP off the request path.",
+        },
+        {
+          name: "Read path — the image proxy",
+          body: "The one piece of infrastructure that exists purely because an upstream refuses to cooperate. A Django view validates the requested host against an allowlist, re-requests the image with a spoofed Referer, and streams it back with a seven-day immutable cache header — so the browser only ever talks to my origin and the ephemeral upstream node stays an implementation detail.",
+        },
+        {
+          name: "Observability — Prometheus, Grafana, Loki, Promtail",
+          body: "django-prometheus exposes application and database-query metrics; Prometheus scrapes them every four seconds. Promtail tails the Django log and ships it to Loki, which stores it on a TSDB schema. Grafana sits on top. This is the layer I would have been given at a larger company and had to build here, and building it is the reason I can read one.",
         },
       ],
-      footnote: "Fuller architectural detail isn’t mine to publish.",
+      footnote:
+        "Configurations for distributed tracing and long-term metrics storage exist in the repository but are not wired into the running composition. They are staged work, not shipped work, and I would rather say so than let a directory listing imply otherwise.",
+      flow: [
+        { label: "nginx", detail: "static from volume, uwsgi_pass to app" },
+        { label: "Django + uWSGI", detail: "DRF, token auth, nested routers" },
+        { label: "Catalogue path", detail: "Elasticsearch search, Redis-cached rails" },
+        { label: "Reader path", detail: "image proxy, 7-day immutable cache" },
+        {
+          label: "Async + observability plane",
+          detail: "Celery, RabbitMQ, Prometheus, Grafana, Loki, Promtail",
+        },
+      ],
     },
     features: {
-      columns: ["Area", "What I build", ""],
+      columns: ["Feature", "What it does", "The engineering underneath"],
       rows: [
         {
-          feature: "Appointment interfaces",
-          what: "Scheduling and appointment workflows in the frontend",
-          why: "",
+          feature: "Manga catalogue and reader",
+          what: "Ingested catalogue, tag filtering, chapter list with sort, fullscreen reader with vertical and page modes, keyboard shortcuts, auto-hiding chrome and a page-grid navigator",
+          why: "Chapter numbers arrive as free text, so ordering is a database-level cast to integer on a derived column rather than the model’s lexicographic default",
         },
         {
-          feature: "Patient workflow dashboards",
-          what: "Dense clinical information rendered legibly",
-          why: "",
+          feature: "Full-text search",
+          what: "Debounced search across titles, descriptions and tags with its own pagination bounds",
+          why: "Elasticsearch as a read replica of the searchable fields, so query load never lands on MariaDB. 500ms debounce on the client so keystrokes do not each become a query",
         },
         {
-          feature: "AI-assisted experiences",
-          what: "Product requirements for AI features turned into usable flows",
-          why: "",
+          feature: "Personalised and ranked rails",
+          what: "Continue reading, trending and popular, on the homepage",
+          why: "Maintained incrementally in Redis rather than recomputed. Recency uses a capped-LRU list idiom that self-bounds at ten entries with no cleanup job",
         },
         {
-          feature: "Modular workflow components",
-          what: "Scalable, reusable healthcare workflow pieces rather than per-screen builds",
-          why: "",
+          feature: "Image proxy",
+          what: "Serves upstream page images through my own origin",
+          why: "Host-allowlisted, Referer-spoofing relay with a seven-day immutable cache header — the only way those images can reach a browser on this domain at all",
+        },
+        {
+          feature: "Threaded comments",
+          what: "Nested replies with edit and delete restricted to the author",
+          why: "Self-referential foreign key with a recursive serializer, and the one query in the project hardened against N+1 with select_related and prefetch_related",
+        },
+        {
+          feature: "Auth, including Google",
+          what: "Username-or-email and password, or Google OAuth",
+          why: "Custom authentication backend resolving either identifier; OAuth client credentials read from the database at request time rather than baked into the application",
+        },
+        {
+          feature: "Anime viewing interface",
+          what: "Full player chrome — seek, volume with mute interlock, quality and speed selection, fullscreen, episode navigation, auto-hide, keybindings",
+          why: "Interface complete and interactive; the streaming backend is the current build phase, so the player runs against a placeholder source rather than a manifest",
         },
       ],
     },
     decisions: {
       preface:
-        "The system-level decisions on this project aren’t mine to claim. Within my layer:",
+        "Four decisions I would defend, and one I would reverse. The reversal is the more useful conversation.",
       items: [
         {
-          title: "Modular composition over per-screen implementation.",
-          body: "Healthcare workflows repeat with variation — the same appointment logic appears in several places with different roles and constraints. Building composable workflow components rather than screens means variation is configuration, and the next requirement is a change rather than a rewrite.",
+          title: "Four retry strategies, chosen by failure class.",
+          body: "Treating every failure identically is how a crawler either gives up too early or gets banned. So each class gets its own response: rate limiting and dropped connections retry on truncated exponential backoff plus random jitter — the jitter matters because a synchronous crawler retrying on exact powers of two self-synchronises into bursts; timeouts retry on plain exponential backoff; non-retryable HTTP errors bail immediately rather than burning the retry budget; and the second upstream, with its own separate limit, gets its own fixed-interval loop. Between items there is a deliberate jittered politeness delay, because staying under the sustained-rate threshold on purpose is cheaper than reacting to bans.",
         },
         {
-          title: "Fit the existing architecture rather than work around it.",
-          body: "The tempting move as a new contributor is to build alongside what’s there in a way you find cleaner. Working within the established patterns costs some short-term speed and is the reason the codebase stays maintainable by the people who’ll have it after my internship.",
+          title: "Skip the item, never the run.",
+          body: "If a chapter’s images cannot be resolved after five attempts, the crawl logs it and continues to the next chapter rather than persisting a broken row or aborting. Upserts are keyed on the upstream identifier pair, so a re-run repairs what was skipped instead of duplicating what succeeded. Combined, those two properties mean the recovery procedure for a failed crawl is to run it again — which is the only recovery procedure I will reliably follow.",
         },
         {
-          title: "Treat the API contract as a coordination artefact.",
-          body: "The interface between frontend and backend is where assumptions become bugs. Agreeing it explicitly with the backend team, rather than inferring it from a response shape, is the cheapest debugging I do.",
+          title: "Reprojecting Redis ordering back into SQL.",
+          body: "The recency rail needs rows in insertion order, and a WHERE id IN (...) query explicitly does not guarantee it. The obvious fix is to fetch and re-sort in Python. Instead the Redis list order is compiled into a CASE WHEN ladder passed to order_by, so the database returns rows already in the right order and the application does no sorting at all. It is the sharpest few lines in the backend and the one I would put on a whiteboard.",
+        },
+        {
+          title: "Self-hosting the observability stack.",
+          body: "Prometheus scraping every four seconds, Promtail tailing into Loki, Grafana on top, with the database engine itself wrapped so query-level metrics are exposed alongside application metrics. A hosted APM would have been an afternoon. Building it taught me what a scrape interval costs, why log shipping is a separate concern from log writing, and how to read a metrics plane — which is the transferable skill, and the reason this was worth the extra week.",
+        },
+        {
+          title: "Handing chapter images to the reader through localStorage. I would reverse this.",
+          body: "The chapter list writes the page-URL array into localStorage and the reader reads it back, which avoids a second request and works perfectly from a click. It also means the reader cannot be refreshed, deep-linked or shared — arriving directly renders an error — and because the list endpoint serialises every field, a long series ships every chapter’s full image array to fetch one. The correct design is a per-chapter endpoint and a trimmed list serializer. This is the clearest example on this page of a decision that was locally convenient and architecturally wrong, and I would rather name it than have someone find it.",
         },
       ],
     },
     challenges: [
       {
-        title: "Working inside decisions I didn’t make.",
-        body: "Every other project on this page, I chose the structure. Here I inherit it, and my judgment about what’s better is frequently missing context about why something is the way it is. Learning to ask before improving is the actual skill.",
+        title: "Joining two catalogues with no shared key.",
+        body: "The only join available was the title, across two sources that spell things differently. The normaliser is deliberately lossy — strip everything non-alphanumeric, keep the first four words — because maximising recall matters more than precision when a miss simply means no cover art. Once resolved, the discovered second identifier is stored, so the fuzzy match runs once per title and never again.",
       },
       {
-        title: "Density without simplification.",
-        body: "Clinical users need a lot on screen. You can’t solve that by hiding things — hidden information in a clinical workflow is a hazard. The problem is hierarchy, not reduction, and it’s harder.",
+        title: "Chapter numbers that are not numbers.",
+        body: "Upstream chapter numbers include values like 10.5 and Extra, along with empty and null, so the field is text and the model’s default ordering sorts chapter 10 before chapter 2. Solved twice, in two places: a database-level cast to integer on an annotated column for the API ordering, and again on the client because the chapter list also supports a user-toggled sort direction that cannot re-query.",
       },
       {
-        title: "AI features in a context with consequences.",
-        body: "An AI suggestion in a consumer app that’s wrong is an annoyance. In a patient workflow it’s something else. The interface has to make it clear what’s a suggestion, where it came from, and how to override it.",
+        title: "A producer and consumer that disagreed on a key.",
+        body: "The view-tracking task writes a per-day trending key; the homepage reads a weekly one; nothing rolls the daily keys up. The result is that the trending rail returns an empty list and the daily sets accumulate unread. The architecture is right and the aggregation job is missing — the fix is one scheduled union of the last seven days. I found this by reading the code path rather than from an alert, which is itself the finding: I have metrics on request rates and none on whether a feature returns data.",
       },
       {
-        title: "Coordination cost as a feature of the job.",
-        body: "Working with backend and design is slower than deciding alone and produces things that survive after I leave. Recalibrating my sense of “productive” around that took a while.",
+        title: "Secrets baked into the image.",
+        body: "The Dockerfile copies the environment file into the image and the docker ignore file is empty, so credentials are present in every layer. This is the most serious defect in the project, it is entirely mine, and the remediation is not just a config change — the keys have to be rotated because they are also in the build history. Naming it here is deliberate: I would rather be the person who found it than the person who shipped it and did not notice.",
+      },
+      {
+        title: "No tests, on a system with real users.",
+        body: "There is no automated test suite in either repository — the test files are the Django scaffolding with nothing in them. MoneyDock has 272 tests because Animatrixx taught me what their absence costs: every one of the defects above was found by reading code or by a user hitting it, which is the slowest and most expensive way to find anything.",
+      },
+      {
+        title: "Turning off the type checker to ship.",
+        body: "The frontend build ignores TypeScript errors, and that flag is load-bearing: the manga detail page renders six fields the serializer never returns, so they are undefined in production. Disabling the check did not make the problem go away, it made it invisible — and the honest version of this is that I chose shipping over correctness and then stopped being able to see the difference.",
       },
     ],
     lessons: [
       {
-        title: "Requirements read differently when you’ll implement them.",
-        body: "Reading someone else’s requirements and building against them has changed how I write my own. I’m more specific about edge cases and less casual about phrases like “handle appropriately.”",
+        title: "Build the observability plane once, and you can read anyone’s.",
+        body: "Standing up Prometheus, Loki, Promtail and Grafana myself is why a metrics dashboard is now a tool rather than a wall of charts. It is the single most transferable thing this project gave me, and I would not have got it from a hosted agent and a default dashboard.",
       },
       {
-        title: "Constraints you didn’t choose are the useful ones.",
-        body: "My own projects reflect my preferences. This one doesn’t, and working inside someone else’s structure has taught me more per week than greenfield does.",
+        title: "Instrument features, not just infrastructure.",
+        body: "I had four-second scrape intervals on request rates and no way to notice that a homepage rail had been returning an empty list. Infrastructure metrics tell you the service is up. They say nothing about whether it is doing its job, and I now treat those as two separate questions.",
       },
       {
-        title: "Legibility is the product in high-stakes software.",
-        body: "A hospital dashboard that’s beautiful and ambiguous is a worse product than one that’s plain and unmistakable. This has permanently changed how I think about interface polish.",
+        title: "Suppressing a warning is a decision with a cost.",
+        body: "Ignoring build-time type errors let me ship and hid a live data-contract break. The lesson was not “types are good” — it was that turning off a check converts a known problem into an unknown one, and unknown problems are the expensive kind.",
       },
       {
-        title: "“Modular and scalable” is a claim about the future.",
-        body: "The test of whether a component was well designed is what the next requirement costs. Nothing else.",
+        title: "Idempotence is the recovery plan you will actually use.",
+        body: "Upserting on a stable upstream key means the answer to a half-finished crawl is to run it again. Every recovery procedure more complex than that is a procedure I would have got wrong at the moment I needed it.",
+      },
+      {
+        title: "Convenient at the call site, wrong at the boundary.",
+        body: "The localStorage handoff saved a request and cost addressability, shareability and refresh. I now ask what a design forbids, not only what it enables — a URL that cannot be shared is a product decision disguised as an implementation detail.",
+      },
+      {
+        title: "This project is the reason the next one had tests.",
+        body: "Almost every discipline in MoneyDock — the test-gated deploy, the pure functions, the timeouts on every outbound call, the hardening pass with each fix pinned by a test — is a direct response to something that went wrong here. Taken as a pair, that progression is the most useful thing either project says about me.",
       },
     ],
     futureImprovements: {
-      preface: "Framed as what I’d want to push for, not as decisions I own:",
+      preface:
+        "Ordered by severity rather than by appeal. The first three are correctness and security work, not features.",
       items: [
-        "Instrument the appointment and patient workflows so requirement debates are settled with usage data.",
-        "Make AI-assisted suggestions consistently traceable — source and confidence visible at the point of use in every flow.",
-        "Extend the modular workflow components as coverage grows, with the next-requirement cost as the test of whether they’re right.",
-        "Push interface-contract agreements earlier in the cycle, before implementation rather than during it.",
+        "Rotate every credential and rebuild the image with a populated docker ignore file, so secrets stop living in build layers and history. Highest priority, and not optional.",
+        "Ship the streaming backend behind the completed player interface — source resolution, an HLS manifest and a segment-serving path — so the anime half runs on real media rather than a placeholder.",
+        "Add the scheduled rollup that unions the daily trending keys into the weekly one, and put a TTL on the dailies so they stop accumulating unread.",
+        "Make the reader addressable: a per-chapter images endpoint, a trimmed list serializer that stops shipping every chapter’s pages, and real previous and next chapter links instead of the current dead buttons.",
+        "Add lazy loading and windowing to the reader. Every page of a chapter currently mounts at once against a proxy that buffers whole images in a worker, so a long chapter fires dozens of concurrent requests on open.",
+        "Turn the type checker back on and fix what it finds, starting with the six fields the manga detail page reads and the serializer never sends.",
+        "Fix the persistence path for reading progress — two endpoints currently fail on a type mismatch, which is why the reader never reports progress at all.",
+        "Add throttling. The rate-limit decorator on login is installed and commented out, so there is no brute-force protection on the authentication endpoint.",
+        "Standard Django production hardening: TLS redirect, HSTS, secure cookie flags, a proxy SSL header, and log rotation — the log currently runs at debug level to an unrotated file, which captures every query forever.",
+        "A test suite. Starting with the ingestion pipeline and the auth endpoints, because those are where a regression is both most likely and least visible.",
       ],
     },
     technologies: {
-      statedLabel: "Named in the résumé for this project",
+      statedLabel: "In the codebase",
       stated: [
-        "Frontend interfaces and dashboards",
-        "AI Workflow Design",
-        "Modular, scalable workflow architecture",
-      ],
-      impliedLabel: "In the global skills list, not attributed to Docmize",
-      implied: [
-        "React",
-        "Next.js",
+        "Python 3.10",
+        "Django 5",
+        "Django REST Framework",
+        "Celery",
+        "RabbitMQ",
+        "Redis",
+        "MariaDB",
+        "Elasticsearch",
+        "Docker Compose",
+        "nginx",
+        "uWSGI",
+        "Prometheus",
+        "Grafana",
+        "Loki",
+        "Promtail",
+        "AWS S3",
+        "Next.js 15",
+        "React 19",
         "TypeScript",
-        "JavaScript",
-        "REST APIs",
-        "Agile & Scrum",
-        "Jira",
-        "Notion",
+        "Tailwind CSS",
+      ],
+      impliedLabel: "Engineering practices the build depends on",
+      implied: [
+        "Container orchestration",
+        "Linux server administration",
+        "Reverse-proxy configuration",
+        "Distributed task queues",
+        "Cache design",
+        "Web scraping at scale",
+        "Backoff and jitter",
+        "Observability engineering",
+        "OAuth integration",
       ],
     },
     links: [
-      { label: "Open the live product", unavailable: unavailable.clientRestricted },
+      { label: "Open the live product", href: "https://animatrixx.in" },
+      { label: "View the code", unavailable: unavailable.privateRepo },
     ],
-    mediaPlaceholder: unavailable.screensPendingClearance,
+    mediaPlaceholder: emptyStates.mediaSlot,
   },
 ];
 

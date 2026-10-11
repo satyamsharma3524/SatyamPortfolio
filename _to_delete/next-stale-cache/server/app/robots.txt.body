@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://shivam-sharma-portfolio-theta.vercel.app
+Sitemap: https://shivam-sharma-portfolio-theta.vercel.app/sitemap.xml
