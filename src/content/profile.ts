@@ -25,12 +25,12 @@
 export const profile = {
   name: "Satyam Sharma",
   role: "Software Engineer · Backend & Platform",
-  email: "support@moneydock.in",
+  email: "satyamsharma3524@gmail.com",
   phone: "",
   location: "Noida, Uttar Pradesh, India · IST (GMT+5:30)",
   locationShort: "Noida, India · IST",
   experience: "4 years in production",
-  siteUrl: "https://satyam-sharma-portfolio.vercel.app",
+  siteUrl: "https://satyamsharma.dev",
   resumeHref: "/SatyamSharma_Resume_2025.pdf",
   /* Flip to true once the PDF is in /public. Widened to `boolean` deliberately so the
      conditional branches on both sides stay live code rather than being narrowed away. */
