@@ -169,6 +169,7 @@ export function CaseStudy({ project }: { project: Project }) {
               <MaskLines
                 as="h1"
                 lines={[project.name]}
+                srPrefix="Satyam Sharma —"
                 className="text-h1 font-medium text-ink"
               />
               {liveHref && (

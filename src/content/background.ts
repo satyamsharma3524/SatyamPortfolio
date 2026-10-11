@@ -26,7 +26,7 @@ export const backgroundMeta: SectionMeta = {
   id: "background",
   eyebrow: "05 · Background",
   heading: "Experience, education, credentials",
-  intro: "The formal version, for anyone who needs it in this shape.",
+  intro: "Satyam Sharma’s experience, education and credentials — the formal version, for anyone who needs it in this shape.",
 };
 
 export const experience: readonly ExperienceEntry[] = [
@@ -35,6 +35,13 @@ export const experience: readonly ExperienceEntry[] = [
     org: "HT Media · Hindustan Times",
     context: "Gurugram, Haryana · On-site",
     period: "Mar 2026 — Present",
+    slug: "ht-media",
+    orgName: "HT Media (Hindustan Times)",
+    orgAliases: ["HT Media", "HT Media Limited", "Hindustan Times", "HTMedia"],
+    orgSameAs: ["https://en.wikipedia.org/wiki/HT_Media"],
+    city: "Gurugram",
+    current: true,
+    stack: ["Python", "Django", "Linux"],
     bullets: [
       "Backend and infrastructure engineering inside one of India’s largest media groups — an established codebase, architectural decisions I did not make, and traffic at a scale no side project reaches.",
       "Python, Django and Linux server work, in an environment where the development and operations halves of a change are both mine to reason about.",
@@ -45,6 +52,11 @@ export const experience: readonly ExperienceEntry[] = [
     org: "India IVF Fertility",
     context: "Noida, Uttar Pradesh · On-site · 1 yr 2 mos",
     period: "Feb 2025 — Mar 2026",
+    slug: "india-ivf-fertility",
+    orgName: "India IVF Fertility",
+    orgAliases: ["India IVF", "IndiaIVF", "India IVF Clinic"],
+    city: "Noida",
+    stack: ["Django", "Django REST Framework", "Docker", "MariaDB", "CI/CD", "Linux"],
     bullets: [
       "A role where the Django work and the DevOps work were formally the same job: building Django and Django REST Framework services, and configuring the containers, servers and deployment path they ran on.",
       "MariaDB schema design and administration, deployment pipelines, and system deployment — the areas colleagues at the company have since endorsed on the public record.",
@@ -56,6 +68,22 @@ export const experience: readonly ExperienceEntry[] = [
     org: "InstaAstro",
     context: "Noida, Uttar Pradesh · On-site · 2 yrs 3 mos",
     period: "Oct 2022 — Dec 2024",
+    slug: "instaastro",
+    orgName: "InstaAstro",
+    orgAliases: ["Insta Astro"],
+    city: "Noida",
+    stack: [
+      "Python",
+      "Django",
+      "Django REST Framework",
+      "Celery",
+      "RabbitMQ",
+      "MariaDB",
+      "Docker",
+      "Linux",
+      "Prometheus",
+      "Grafana",
+    ],
     bullets: [
       "Back-end engineering on a live consumer product at a product-based startup — Python, Django and Django REST Framework against real users from my first year in the industry.",
       "Asynchronous processing with Celery over RabbitMQ, MariaDB and ORM-level work, and Docker on Linux for packaging and deployment.",
@@ -67,6 +95,10 @@ export const experience: readonly ExperienceEntry[] = [
     org: "Coding Ninjas",
     context: "Apprenticeship · 1 yr 3 mos",
     period: "Jul 2022 — Sep 2023",
+    slug: "coding-ninjas",
+    orgName: "Coding Ninjas",
+    shortRole: "Data Science Apprentice",
+    stack: ["Python", "Data Science", "Machine Learning"],
     bullets: [
       "Structured apprenticeship in data science and machine learning, run alongside full-time engineering work. The Python data-handling habits it built are the ones the MoneyDock metric layer is written with.",
     ],
@@ -134,3 +166,7 @@ export const leadership: readonly NamedBlock[] = [
     body: "The Animatrixx write-up on this site names the secrets baked into a Docker image, the homepage rail that silently returns nothing, and the localStorage decision I would reverse. I would rather be the engineer who found those and said so than the one who shipped them and hoped nobody looked.",
   },
 ];
+
+export function experienceBySlug(slug: string): ExperienceEntry | undefined {
+  return experience.find((entry) => entry.slug === slug);
+}

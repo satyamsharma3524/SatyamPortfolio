@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import { Boot } from "@/src/components/layout/Boot";
 import { a11y } from "@/src/content/microcopy";
 import { profile } from "@/src/content/profile";
-import { personSchema, seo } from "@/src/content/seo";
+import { seo } from "@/src/content/seo";
 import "./globals.css";
 
 /**
@@ -44,16 +44,27 @@ const plexMono = localFont({
   fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
 });
 
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
   title: { default: seo.title, template: seo.titleTemplate },
   description: seo.description,
+  applicationName: seo.siteName,
   keywords: [...seo.keywords],
   authors: [{ name: profile.name, url: profile.siteUrl }],
   creator: profile.name,
+  publisher: profile.name,
+  category: "technology",
   alternates: { canonical: "/" },
+  formatDetection: { telephone: false, address: false, email: false },
   openGraph: {
-    type: "website",
+    /* "profile" tells Facebook, LinkedIn and Google this page is about one person. */
+    type: "profile",
+    firstName: "Satyam",
+    lastName: "Sharma",
+    username: "satyamsharma3524",
     locale: "en_IN",
     siteName: seo.siteName,
     title: seo.ogTitle,
@@ -68,7 +79,21 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  /*
+    Search Console / Bing Webmaster ownership. Set these in Vercel's environment
+    variables (or verify by DNS instead) — nothing renders while they are unset.
+  */
+  verification: {
+    ...(googleVerification ? { google: googleVerification } : {}),
+    ...(bingVerification ? { other: { "msvalidate.01": bingVerification } } : {}),
   },
 };
 
@@ -104,6 +129,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        {/* rel="me": the profiles that are the same person as this site. */}
+        {[profile.links.linkedin, profile.links.github]
+          .filter((href): href is string => Boolean(href))
+          .map((href) => (
+            <link key={href} rel="me" href={href} />
+          ))}
       </head>
       <body
         suppressHydrationWarning
@@ -119,12 +150,6 @@ export default function RootLayout({
         </a>
 
         {children}
-
-        <script
-          type="application/ld+json"
-          // Static, author-controlled object. No user input reaches this string.
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
-        />
       </body>
     </html>
   );

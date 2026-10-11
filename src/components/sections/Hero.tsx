@@ -4,7 +4,7 @@ import { MaskLines } from "@/src/components/motion/MaskLines";
 import { Reveal, RevealChild, Stagger } from "@/src/components/motion/Reveal";
 import { Button } from "@/src/components/ui/Button";
 import { CopyButton } from "@/src/components/ui/CopyButton";
-import { Badge, Eyebrow } from "@/src/components/ui/primitives";
+import { Badge, Eyebrow, EmailText } from "@/src/components/ui/primitives";
 import { hero, techStrip } from "@/src/content/hero";
 import { a11y, buttons } from "@/src/content/microcopy";
 import { profile } from "@/src/content/profile";
@@ -97,6 +97,7 @@ export function Hero() {
             <MaskLines
               as="h1"
               lines={hero.headlineLines}
+              srPrefix={hero.headlineSrPrefix}
               className="mt-8 text-[clamp(2.75rem,5.6vw,5.5rem)] font-medium leading-[0.95] tracking-[-0.042em] text-ink"
             />
 
@@ -128,13 +129,13 @@ export function Hero() {
                     LinkedIn
                   </Button>
                 )}
-                <span className="ml-1 flex items-center gap-3">
+                <span className="ml-1 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2">
                   <a
                     href={`mailto:${profile.email}`}
                     aria-label={a11y.emailLink}
-                    className="link-draw font-mono text-mono-lg tracking-[0.05em] text-ink-2 hover:text-accent-hover"
+                    className="link-draw min-w-0 font-mono text-mono-lg tracking-[0.05em] text-ink-2 hover:text-accent-hover"
                   >
-                    {profile.email}
+                    <EmailText email={profile.email} />
                   </a>
                   <CopyButton
                     value={profile.email}
@@ -157,14 +158,14 @@ export function Hero() {
                     the empty eighth column. The photograph is never a picture inside
                     an empty box, and the numbers are never text on top of a face. */}
                 <Stagger
-                  className="relative z-10 -mt-12 ml-3 mr-5 grid grid-cols-2 overflow-hidden rounded-[10px] border border-line bg-card shadow-e3 sm:-mt-14 lg:-ml-14 lg:mr-0"
+                  className="relative z-10 -mt-12 ml-3 mr-5 grid grid-cols-2 max-[359px]:mx-0 overflow-hidden rounded-[10px] border border-line bg-card shadow-e3 sm:-mt-14 lg:-ml-14 lg:mr-0"
                   stagger={0.07}
                 >
                   {hero.proof.map((point, index) => (
                     <RevealChild
                       key={point.label}
                       y={10}
-                      className={`px-4 py-4 sm:px-5 sm:py-5 ${
+                      className={`px-4 py-4 max-[359px]:px-3 sm:px-5 sm:py-5 ${
                         index % 2 === 0 ? "border-r border-line" : ""
                       } ${index < 2 ? "border-b border-line" : ""}`}
                     >

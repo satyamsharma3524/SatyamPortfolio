@@ -89,10 +89,11 @@ export function SiteHeader({ variant = "home" }: { variant?: "home" | "sub" }) {
           href="/"
           className="group -ml-1 flex items-baseline gap-2.5 rounded px-1 py-1"
         >
-          <span className="text-[0.95rem] font-medium tracking-[-0.015em] text-ink">
+          <span className="whitespace-nowrap text-[0.95rem] font-medium tracking-[-0.015em] text-ink">
             {profile.name}
           </span>
-          <span className="hidden font-mono text-mono uppercase tracking-[0.14em] text-ink-4 sm:inline">
+          {/* Hidden from 1024–1279px, where the full nav needs the room; it returns at xl. */}
+          <span className="hidden whitespace-nowrap font-mono text-mono uppercase tracking-[0.14em] text-ink-4 sm:inline lg:hidden xl:inline">
             Backend &amp; Platform
           </span>
         </Link>
@@ -108,7 +109,7 @@ export function SiteHeader({ variant = "home" }: { variant?: "home" | "sub" }) {
                   <a
                     href={`${homePrefix}${item.href}`}
                     aria-current={isActive ? "true" : undefined}
-                    className={`relative block rounded px-3 py-2 text-sm transition-colors duration-[var(--dur-hover)] ${
+                    className={`relative block whitespace-nowrap rounded px-2.5 py-2 text-sm transition-colors xl:px-3 duration-[var(--dur-hover)] ${
                       isActive ? "text-ink" : "text-ink-2 hover:text-ink"
                     }`}
                   >
@@ -132,7 +133,12 @@ export function SiteHeader({ variant = "home" }: { variant?: "home" | "sub" }) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <ThemeToggle className="hidden md:inline-flex" />
+          {/* Wrapped for the same reason as the résumé button below: the toggle's own
+              `inline-flex` beat `hidden`, so it showed on phones and pushed the
+              Sections button off-screen. On phones it lives in the sheet. */}
+          <span className="hidden md:block">
+            <ThemeToggle />
+          </span>
 
           {/* Wrapper, not `hidden sm:inline-flex` on the button: `hidden` and the
               button's own `inline-flex` are both display utilities, so the attribute

@@ -13,6 +13,11 @@ interface MaskLinesProps {
   /** Seconds between lines. 60ms is the house stagger. */
   stagger?: number;
   delay?: number;
+  /**
+   * Text read by screen readers and search engines at the start of the heading but
+   * not drawn — e.g. the name, so the H1 says who the page is about.
+   */
+  srPrefix?: string;
 }
 
 /**
@@ -32,7 +37,9 @@ export function MaskLines({
   className,
   stagger = 0.06,
   delay = 0,
+  srPrefix,
 }: MaskLinesProps) {
+  const prefix = srPrefix ? <span className="sr-only">{srPrefix} </span> : null;
   const reduced = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -8% 0px" });
@@ -40,6 +47,7 @@ export function MaskLines({
   if (reduced) {
     return (
       <Tag className={className}>
+        {prefix}
         {lines.map((line) => (
           <span key={line} className="block">
             {line}
@@ -51,6 +59,7 @@ export function MaskLines({
 
   return (
     <Tag ref={ref} className={className}>
+      {prefix}
       {lines.map((line, index) => (
         <span
           key={line}

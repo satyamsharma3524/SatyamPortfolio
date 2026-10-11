@@ -60,12 +60,15 @@ const footerLinks: readonly FooterLink[] = [
   { label: "MoneyDock", href: profile.links.moneydock, external: true },
   { label: "Animatrixx", href: profile.links.animatrixx, external: true },
   { label: "LinkedIn", href: profile.links.linkedin, external: true },
+  ...(profile.links.github
+    ? [{ label: "GitHub", href: profile.links.github, external: true }]
+    : []),
   { label: "Email", href: `mailto:${profile.email}` },
 ];
 
 export const footer = {
   name: profile.name,
-  tagline: "I build the service, then I run it.",
+  tagline: "Code that ships. Servers that stay up.",
   links: footerLinks,
   status: [profile.locationShort, "Open to Backend / Platform / DevOps roles"],
   bottom:

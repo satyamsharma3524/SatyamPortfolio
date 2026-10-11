@@ -29,7 +29,11 @@ export function SiteFooter() {
                       <a
                         href={link.href}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel={
+                          /linkedin\.com|github\.com/.test(link.href)
+                            ? "me noopener"
+                            : "noopener"
+                        }
                         className="link-draw text-sm text-ink-2 hover:text-ink"
                       >
                         {link.label}

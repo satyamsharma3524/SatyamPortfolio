@@ -77,7 +77,14 @@ export function Background() {
                         <ArrowUpRight className="mt-1 shrink-0 text-ink-4 transition-[transform,color] duration-[var(--dur-hover)] group-hover:-translate-y-px group-hover:translate-x-px group-hover:text-accent" />
                       </Link>
                     ) : (
-                      <span className="text-h3 font-medium text-ink-2">{entry.org}</span>
+                      /* Looks exactly like the plain name at rest; underlines on hover.
+                         It is how crawlers find each role's own page. */
+                      <Link
+                        href={`/experience/${entry.slug}`}
+                        className="text-h3 font-medium text-ink-2 transition-colors duration-[var(--dur-hover)] hover:text-accent-hover"
+                      >
+                        <span className="link-draw">{entry.org}</span>
+                      </Link>
                     )}
                   </div>
 

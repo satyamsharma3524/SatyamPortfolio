@@ -189,6 +189,22 @@ export interface ExperienceEntry {
   readonly period: string;
   readonly bullets: readonly string[];
   readonly caseStudy?: string;
+  /** URL segment for this role's own page: /experience/<slug>. */
+  readonly slug: string;
+  /** The organisation's plain name, for page titles and schema. */
+  readonly orgName: string;
+  /** A shorter role title for the <title> tag, when the full one would be truncated. */
+  readonly shortRole?: string;
+  /** Other names people search the organisation by. */
+  readonly orgAliases?: readonly string[];
+  /** Verified public references for the organisation (schema sameAs). */
+  readonly orgSameAs?: readonly string[];
+  /** Where the role was based. */
+  readonly city?: string;
+  /** True for the role held now. */
+  readonly current?: boolean;
+  /** Technologies named in this role's bullets — nothing that is not stated above. */
+  readonly stack: readonly string[];
 }
 
 export interface Certification {

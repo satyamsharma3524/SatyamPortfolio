@@ -174,3 +174,19 @@ export function Narrative({
     </div>
   );
 }
+
+/**
+ * An email address that, if it ever has to wrap, wraps after the "@" and nowhere
+ * else — never "…@gmail.co / m".
+ */
+export function EmailText({ email }: { email: string }) {
+  const at = email.indexOf("@");
+  if (at < 0) return <>{email}</>;
+  return (
+    <>
+      {email.slice(0, at)}
+      <wbr />
+      {email.slice(at)}
+    </>
+  );
+}

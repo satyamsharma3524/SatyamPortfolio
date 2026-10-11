@@ -30,7 +30,8 @@ export const profile = {
   location: "Noida, Uttar Pradesh, India · IST (GMT+5:30)",
   locationShort: "Noida, India · IST",
   experience: "4 years in production",
-  siteUrl: "https://satyamsharma.dev",
+  /* www is the production domain on Vercel; the apex 308-redirects to it. */
+  siteUrl: "https://www.satyamsharma.dev",
   resumeHref: "/SatyamSharma_Resume_2025.pdf",
   /* Flip to true once the PDF is in /public. Widened to `boolean` deliberately so the
      conditional branches on both sides stay live code rather than being narrowed away. */
@@ -39,15 +40,8 @@ export const profile = {
   links: {
     /* Verified: read off the public profile URL on the LinkedIn account itself. */
     linkedin: "https://www.linkedin.com/in/satyam-sharma-726b19202",
-    /*
-      NULL BECAUSE I DO NOT KNOW IT. An earlier revision of this file had
-      "https://github.com/satyamsharma" here — that was a guess at the handle, not a
-      verified URL, and it is exactly the kind of link that 404s in front of the one
-      reader who bothered to click it. Every consumer of this field is gated on it
-      being non-null, so the GitHub affordance simply does not render until the real
-      handle is set. Put the actual profile URL here and it appears everywhere.
-    */
-    github: null as string | null,
+    /* Verified: the handle on the résumé and the account that owns the portfolio repo. */
+    github: "https://github.com/satyamsharma3524" as string | null,
     /* Verified: both resolve and are the live deployments described in the case studies. */
     moneydock: "https://moneydock.in",
     animatrixx: "https://animatrixx.in",
@@ -56,7 +50,7 @@ export const profile = {
 
 /** Section 2 — Personal Brand System. */
 export const brand = {
-  tagline: "I build the service, then I run it.",
+  tagline: "Code that ships. Servers that stay up.",
   secondaryTaglines: [
     "Four years of Python in production, across three product startups.",
     "The API, the queue, the container, and the dashboard that watches it.",

@@ -4,13 +4,15 @@ import type { ProofPoint } from "./types";
 
 export const hero = {
   eyebrow: "Four years of Python in production. Three product startups.",
-  headline: "I build the service, then I run it.",
+  headline: "Code that ships. Servers that stay up.",
   /**
    * The same headline, broken for the line-by-line mask reveal. The break sits at
    * the comma — the identical split the OG image uses, so the social card and the
    * page agree.
    */
-  headlineLines: ["I build the service,", "then I run it."],
+  headlineLines: ["Code that ships.", "Servers that stay up."],
+  /** Read before the headline by screen readers and crawlers, so the H1 names him. */
+  headlineSrPrefix: "Satyam Sharma, backend and platform engineer —",
   subheadline:
     "Backend engineer working the seam between development and operations — Python and Django services, and the Linux, Docker and observability layer they actually run on.",
   lede: "Software Engineer at HT Media, previously India IVF Fertility and InstaAstro. Outside work I built MoneyDock, a personal-finance platform for the Indian market: 27 calculators, ~4,800 indexed pages, five live data feeds, and 272 automated tests wired into the build command so a failing test blocks the deploy. And Animatrixx — plus the nine-container stack behind it: Django under uWSGI behind nginx, Celery on RabbitMQ, Redis, Elasticsearch, and a Prometheus/Grafana/Loki layer I self-host rather than rent.",
@@ -24,7 +26,7 @@ export const hero = {
   availability:
     "Open to Backend, Platform and DevOps engineering roles · Delhi NCR — Noida, Gurugram · On-site, hybrid or remote",
   scrollCue: "Scroll",
-  portraitAlt: "Satyam Sharma.",
+  portraitAlt: "Satyam Sharma, backend and platform engineer, Noida, India",
   /**
    * Rendered in place of the photograph while `profile.portrait` is null. Initials,
    * role and location set in the site's own type — a deliberate panel, rather than a

@@ -9,6 +9,8 @@ import { ProductAnalysis } from "@/src/components/sections/ProductAnalysis";
 import { SiteFooter } from "@/src/components/sections/SiteFooter";
 import { Skills } from "@/src/components/sections/Skills";
 import { Work } from "@/src/components/sections/Work";
+import { JsonLd } from "@/src/components/seo/JsonLd";
+import { siteSchema } from "@/src/content/seo";
 
 /**
  * Home.
@@ -33,6 +35,7 @@ export default function Home() {
         <Contact />
       </main>
       <SiteFooter />
+      <JsonLd data={siteSchema} />
     </>
   );
 }

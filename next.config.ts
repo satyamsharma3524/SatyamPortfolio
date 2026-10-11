@@ -31,6 +31,35 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   poweredByHeader: false,
+  /*
+    One indexable origin: https://www.satyamsharma.dev.
+
+    Vercel already 308s the apex (satyamsharma.dev) to www, so there is deliberately
+    NO apex/www redirect here — adding one in the other direction would loop.
+
+    The production *.vercel.app alias serves the same pages, so it is sent to the real
+    domain too; any other *.vercel.app host (preview deploys) stays reachable for
+    review but is marked noindex so Google never splits the name's ranking across them.
+  */
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "satyam-portfolio-eight-sigma.vercel.app" }],
+        destination: "https://www.satyamsharma.dev/:path*",
+        permanent: true,
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(?<sub>.*)\\.vercel\\.app" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+    ];
+  },
 };
 
 export default nextConfig;

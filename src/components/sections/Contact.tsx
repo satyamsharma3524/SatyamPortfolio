@@ -2,7 +2,7 @@ import { Section, SectionHead } from "@/src/components/layout/Section";
 import { Reveal } from "@/src/components/motion/Reveal";
 import { ArrowUpRight, Button } from "@/src/components/ui/Button";
 import { CopyButton } from "@/src/components/ui/CopyButton";
-import { Eyebrow } from "@/src/components/ui/primitives";
+import { Eyebrow, EmailText } from "@/src/components/ui/primitives";
 import { contact, contactMeta } from "@/src/content/contact";
 import { a11y, buttons } from "@/src/content/microcopy";
 import { profile } from "@/src/content/profile";
@@ -35,13 +35,20 @@ export function Contact() {
 
             {/* The address, at scale. */}
             <Reveal delay={0.08} className="mt-12 lg:mt-14">
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
+              {/* @container: the email sizes against this box (cqw), so it can never be
+                  wider than its column — it scales down instead of wrapping. */}
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-4 @container">
                 <a
                   href={`mailto:${profile.email}`}
                   aria-label={a11y.emailLink}
-                  className="link-draw text-[clamp(1.375rem,4.4vw,3.125rem)] font-medium leading-[1.1] tracking-[-0.035em] text-ink transition-colors duration-[var(--dur-hover)] hover:text-accent-hover"
+                  /* The original size, capped so the whole address always fits its
+                     column on one line. It renders 13.6–14.2× its font size wide, so
+                     100cqw / 14.6 ≈ 6.8cqw leaves a few pixels spare. Inline because
+                     Tailwind does not reliably emit a nested min()/clamp() value. */
+                  style={{ fontSize: "min(clamp(1.375rem, 4.4vw, 3.125rem), 6.8cqw)" }}
+                  className="link-draw max-w-full whitespace-nowrap font-medium leading-[1.1] tracking-[-0.035em] text-ink transition-colors duration-[var(--dur-hover)] hover:text-accent-hover"
                 >
-                  {profile.email}
+                  <EmailText email={profile.email} />
                 </a>
                 <CopyButton
                   value={profile.email}
