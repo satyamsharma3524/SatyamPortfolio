@@ -8,7 +8,9 @@ import type { ExperienceEntry, Project } from "./types";
  * Bump this whenever the content meaningfully changes. It feeds the sitemap's
  * <lastmod> and the schema's dateModified, so Google has a reason to recrawl.
  */
-export const SITE_UPDATED = "2026-10-12";
+// Full ISO 8601 date-time with a timezone: Google's ProfilePage report rejects a bare
+// date ("Invalid datetime value for dateModified").
+export const SITE_UPDATED = "2026-10-14T00:00:00+05:30";
 
 /**
  * Name-first everywhere. The query this site has to win is the name itself, so the
