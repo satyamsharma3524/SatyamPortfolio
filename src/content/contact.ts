@@ -33,8 +33,8 @@ export const contact = {
   details: [
     { label: "Email", value: profile.email, copy: true },
     { label: "Location", value: profile.location },
-    { label: "Availability", value: "Open to Backend / Platform / DevOps roles" },
-    { label: "Work setup", value: "On-site, hybrid or remote · Delhi NCR" },
+    { label: "Availability", value: "Open to remote Backend / Platform / DevOps roles with US and EU teams" },
+    { label: "Work setup", value: "Remote first · overlap with EU and US East hours · Delhi NCR hybrid or on-site also considered" },
     { label: "Experience", value: profile.experience, mono: true },
   ] satisfies readonly ContactDetail[],
 } as const;
@@ -70,7 +70,7 @@ export const footer = {
   name: profile.name,
   tagline: "Code that ships. Servers that stay up.",
   links: footerLinks,
-  status: [profile.locationShort, "Open to Backend / Platform / DevOps roles"],
+  status: [profile.locationShort, "Open to remote Backend / Platform roles"],
   bottom:
     "© 2026 Satyam Sharma · Built with Next.js and TypeScript · Designed and built by me",
   note: "Every number on this site carries the window it was measured over. If something here doesn’t hold up, tell me — I’d rather fix it than defend it.",

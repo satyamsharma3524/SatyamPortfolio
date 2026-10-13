@@ -17,8 +17,8 @@
                      public/images/satyam-sharma-portrait-v2.webp. Set this back to
                      null to fall back to the typographic panel in the meantime.
 
-   ✅ `resumeAvailable` is TRUE: public/SatyamSharma_Resume_2025.pdf is now
-   Satyam's own résumé (the Dec 2025 version — re-export it when it is updated with HT Media),
+   ✅ `resumeAvailable` is TRUE: public/Satyam_Sharma_Resume.pdf is the current
+   résumé (Oct 2026, includes HT Media; the old /SatyamSharma_Resume_2025.pdf URL redirects to it),
    and public/images/satyam-sharma-portrait-v2.webp is his own photograph.
    ========================================================================== */
 
@@ -32,7 +32,7 @@ export const profile = {
   experience: "4 years in production",
   /* www is the production domain on Vercel; the apex 308-redirects to it. */
   siteUrl: "https://www.satyamsharma.dev",
-  resumeHref: "/SatyamSharma_Resume_2025.pdf",
+  resumeHref: "/Satyam_Sharma_Resume.pdf",
   /* Flip to true once the PDF is in /public. Widened to `boolean` deliberately so the
      conditional branches on both sides stay live code rather than being narrowed away. */
   resumeAvailable: true as boolean,

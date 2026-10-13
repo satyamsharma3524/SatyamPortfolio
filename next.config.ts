@@ -43,6 +43,12 @@ const nextConfig: NextConfig = {
   */
   async redirects() {
     return [
+      /* The résumé moved; the old URL may already be shared or indexed. */
+      {
+        source: "/SatyamSharma_Resume_2025.pdf",
+        destination: "/Satyam_Sharma_Resume.pdf",
+        permanent: true,
+      },
       {
         source: "/:path*",
         has: [{ type: "host", value: "satyam-portfolio-eight-sigma.vercel.app" }],

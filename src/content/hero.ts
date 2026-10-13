@@ -24,7 +24,7 @@ export const hero = {
     { value: "9", label: "containerised services I run myself" },
   ] satisfies readonly ProofPoint[],
   availability:
-    "Open to Backend, Platform and DevOps engineering roles · Delhi NCR — Noida, Gurugram · On-site, hybrid or remote",
+    "Open to remote Backend, Platform and DevOps roles with US and EU teams · Overlap with EU and US East hours · Also open to Delhi NCR, hybrid or on-site",
   scrollCue: "Scroll",
   portraitAlt: "Satyam Sharma, backend and platform engineer, Noida, India",
   /**

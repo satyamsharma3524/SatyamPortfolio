@@ -108,8 +108,8 @@ export const experience: readonly ExperienceEntry[] = [
 export const education = {
   degree: "MCA, Computer Software Engineering",
   institution: "Indira Gandhi National Open University",
-  period: "Jul 2023 — Jul 2025",
-  note: "Completed while working full-time as a software engineer — the master’s ran alongside two and a half years of production work rather than before it. Earlier: BCA in web and software development from Panjab University, Chandigarh (2019–2022), graduating with an A+ grade.",
+  period: "2024 — 2026",
+  note: "Pursued while working full-time as a software engineer — the master’s runs alongside production work rather than before it. Earlier: BCA in web and software development from Panjab University, Chandigarh (2019–2022), graduating with an A+ grade.",
 } as const;
 
 export const certifications: readonly Certification[] = [

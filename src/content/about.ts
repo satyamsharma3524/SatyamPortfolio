@@ -52,4 +52,4 @@ export const currentFocus: readonly FocusBlock[] = [
   },
 ];
 
-export const personalNote = "Based in Noida, Uttar Pradesh. MCA, IGNOU, 2025.";
+export const personalNote = "Based in Noida, Uttar Pradesh. MCA, IGNOU, 2024–2026.";
